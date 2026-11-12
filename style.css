@@ -1,7 +1,3 @@
-
-
-
-
 /* ==========================================
    TAROT ARCANO
    ESPÍRITU Y ORIGEN
@@ -2763,6 +2759,74 @@ footer p {
     .reading-conclusion,
     .reading-question {
         font-size: 0.88rem;
+    }
+
+}
+
+/* ==========================================
+   ALINEACIÓN CENTRADA EN CELULARES
+   TAROT ARCANO
+========================================== */
+
+@media (max-width: 600px) {
+
+    /* Títulos y subtítulos */
+    h1,
+    h2,
+    h3,
+    section h2,
+    section h3 {
+        text-align: center;
+    }
+
+    /* Textos generales */
+    p {
+        text-align: center;
+    }
+
+    /* Encabezado y presentación */
+    header,
+    .hero {
+        text-align: center;
+    }
+
+    /* Secciones principales */
+    section {
+        text-align: center;
+    }
+
+    /* Opciones de tiradas */
+    .reading-options {
+        text-align: center;
+        justify-content: center;
+    }
+
+    .reading-card {
+        text-align: center;
+    }
+
+    /* Interpretaciones */
+    #reading-interpretation,
+    .reading-insight,
+    .reading-conclusion,
+    .reading-question {
+        text-align: center;
+    }
+
+    /* Carta del día */
+    .tarot-card-information {
+        text-align: center;
+    }
+
+    /* Biblioteca */
+    .library-controls {
+        text-align: center;
+    }
+
+    /* Historial */
+    #reading-history,
+    .reading-history {
+        text-align: center;
     }
 
 }
