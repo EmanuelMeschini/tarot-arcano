@@ -2580,6 +2580,44 @@ footer p {
     }
 }
 
+/* ==========================================
+   AJUSTES MÓVILES - ESPACIADO DE TIRADAS
+========================================== */
+
+@media (max-width: 600px) {
+
+    /* Separación entre las cartas */
+    .reading-cards {
+        column-gap: 20px;
+        row-gap: 30px;
+        padding: 15px 8px 25px;
+    }
+
+    /* Evita que las posiciones se compriman */
+    .reading-position {
+        min-width: 0;
+        padding: 5px;
+    }
+
+    /* Evita desbordamientos */
+    .tarot-flip-container {
+        max-width: 100%;
+    }
+
+}
+
+/* Celulares pequeños */
+@media (max-width: 380px) {
+
+    .reading-cards {
+        column-gap: 14px;
+        row-gap: 25px;
+        padding-left: 4px;
+        padding-right: 4px;
+    }
+
+}
+
 
 
 
