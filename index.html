@@ -1,0 +1,480 @@
+
+
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Tarot Arcano | Espíritu y Origen</title>
+
+    <meta name="description" content="Explorá los 78 arcanos, descubrí tu carta del día y realizá lecturas de tarot.">
+
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+    <div class="constellation constellation-left" aria-hidden="true">
+    <svg viewBox="0 0 200 600">
+        <path d="M35 65 L85 120 L55 190 L125 245 L95 330 L155 390 L115 480 L165 540" />
+        <path d="M85 120 L145 95 L170 145" />
+        <circle cx="35" cy="65" r="4"/>
+        <circle cx="85" cy="120" r="3"/>
+        <circle cx="55" cy="190" r="4"/>
+        <circle cx="125" cy="245" r="3"/>
+        <circle cx="95" cy="330" r="4"/>
+        <circle cx="155" cy="390" r="3"/>
+        <circle cx="115" cy="480" r="4"/>
+        <circle cx="165" cy="540" r="3"/>
+        <circle cx="145" cy="95" r="3"/>
+        <circle cx="170" cy="145" r="4"/>
+    </svg>
+</div>
+
+<div class="constellation constellation-right" aria-hidden="true">
+    <svg viewBox="0 0 200 600">
+        <path d="M160 55 L105 115 L145 185 L65 250 L115 315 L45 385 L95 460 L35 535" />
+        <path d="M105 115 L45 85 L25 145" />
+        <circle cx="160" cy="55" r="4"/>
+        <circle cx="105" cy="115" r="3"/>
+        <circle cx="145" cy="185" r="4"/>
+        <circle cx="65" cy="250" r="3"/>
+        <circle cx="115" cy="315" r="4"/>
+        <circle cx="45" cy="385" r="3"/>
+        <circle cx="95" cy="460" r="4"/>
+        <circle cx="35" cy="535" r="3"/>
+        <circle cx="45" cy="85" r="3"/>
+        <circle cx="25" cy="145" r="4"/>
+    </svg>
+</div>
+
+    <!-- ==================================
+         ENCABEZADO Y NAVEGACIÓN
+    =================================== -->
+
+    <header class="header">
+
+        <a href="#inicio" class="logo">
+            ✧ TAROT ARCANO ✧
+        </a>
+
+        <nav class="navigation" aria-label="Navegación principal">
+            <a href="#inicio">Inicio</a>
+            <a href="#carta-dia">Carta del día</a>
+            <a href="#tiradas">Tiradas</a>
+            <a href="#biblioteca">Biblioteca</a>
+            <a href="#historial">Historial</a>
+        </nav>
+
+    </header>
+
+
+    <main>
+
+        <!-- ==================================
+             01. INICIO
+        =================================== -->
+
+        <section id="inicio" class="hero page-section">
+
+            <p class="subtitle">
+                EL UNIVERSO TIENE UN MENSAJE PARA VOS
+            </p>
+
+            <h1>
+                Descubrí los secretos<br>
+                del Tarot
+            </h1>
+
+            <p class="hero-description">
+                Un viaje por los símbolos, los arcanos
+                y los misterios que habitan en cada carta.
+            </p>
+
+            <a href="#tiradas" class="main-button">
+                Comenzar mi lectura
+            </a>
+
+        </section>
+
+
+        <!-- ==================================
+             02. CARTA DEL DÍA
+        =================================== -->
+
+        <section id="carta-dia" class="section page-section">
+
+            <div class="section-heading">
+
+                <span class="section-subtitle">
+                    UNA SEÑAL DEL UNIVERSO
+                </span>
+
+                <h2>Tu carta del día</h2>
+
+                <p>
+                    Descubrí qué energía puede acompañarte hoy.
+                </p>
+
+            </div>
+
+            <div id="daily-card" class="card-container">
+                <div class="card-back">✧</div>
+            </div>
+
+            <button id="draw-daily" class="main-button">
+                Revelar mi carta
+            </button>
+
+        </section>
+
+
+        <!-- ==================================
+             03. TIRADAS DE TAROT
+        =================================== -->
+
+        <section id="tiradas" class="section page-section">
+
+            <div class="section-heading">
+
+                <span class="section-subtitle">
+                    CONSULTÁ A LOS ARCANOS
+                </span>
+
+                <h2>Elegí tu tirada</h2>
+
+                <p>
+                    Cada lectura es una oportunidad para reflexionar
+                    sobre diferentes aspectos de tu vida.
+                </p>
+
+            </div>
+
+
+            <div class="reading-options">
+
+                <!-- TIRADA GENERAL -->
+
+                <article class="reading-card">
+                    <span class="reading-icon">✧</span>
+
+                    <h3>Lectura general</h3>
+
+                    <p>
+                        Pasado, presente y futuro.
+                        Explorá tu recorrido y las posibilidades
+                        que se presentan.
+                    </p>
+
+                    <button
+                        class="main-button reading-type-button"
+                        data-reading="general"
+                    >
+                        Elegir tirada
+                    </button>
+                </article>
+
+
+                <!-- AMOR -->
+
+                <article class="reading-card">
+                    <span class="reading-icon">♡</span>
+
+                    <h3>Amor y relaciones</h3>
+
+                    <p>
+                        Explorá tus vínculos, sentimientos,
+                        relaciones y conexiones afectivas.
+                    </p>
+
+                    <button
+                        class="main-button reading-type-button"
+                        data-reading="amor"
+                    >
+                        Elegir tirada
+                    </button>
+                </article>
+
+
+                <!-- TRABAJO -->
+
+                <article class="reading-card">
+                    <span class="reading-icon">⚜</span>
+
+                    <h3>Trabajo y vocación</h3>
+
+                    <p>
+                        Reflexioná sobre proyectos, oportunidades,
+                        desafíos y decisiones profesionales.
+                    </p>
+
+                    <button
+                        class="main-button reading-type-button"
+                        data-reading="trabajo"
+                    >
+                        Elegir tirada
+                    </button>
+                </article>
+
+
+                <!-- DINERO -->
+
+                <article class="reading-card">
+                    <span class="reading-icon">◈</span>
+
+                    <h3>Dinero y prosperidad</h3>
+
+                    <p>
+                        Explorá tu relación con los recursos,
+                        la estabilidad y la prosperidad.
+                    </p>
+
+                    <button
+                        class="main-button reading-type-button"
+                        data-reading="dinero"
+                    >
+                        Elegir tirada
+                    </button>
+                </article>
+
+
+                <!-- FAMILIA -->
+
+                <article class="reading-card">
+                    <span class="reading-icon">☾</span>
+
+                    <h3>Familia y hogar</h3>
+
+                    <p>
+                        Reflexioná sobre los vínculos familiares,
+                        la convivencia y el bienestar.
+                    </p>
+
+                    <button
+                        class="main-button reading-type-button"
+                        data-reading="familia"
+                    >
+                        Elegir tirada
+                    </button>
+                </article>
+
+            </div>
+
+
+            <!-- ÁREA DE LA TIRADA -->
+
+            <div id="three-reading" class="three-reading"></div>
+
+        </section>
+
+
+        <!-- ==================================
+             04. BIBLIOTECA
+        =================================== -->
+
+        <section id="biblioteca" class="section page-section">
+
+            <div class="section-heading">
+
+                <span class="section-subtitle">
+                    CONOCÉ LOS 78 ARCANOS
+                </span>
+
+                <h2>Biblioteca del Tarot</h2>
+
+                <p>
+                    Explorá las cartas y descubrí sus significados,
+                    simbolismos y mensajes.
+                </p>
+
+            </div>
+
+
+            <!-- BUSCADOR -->
+
+            <div class="library-controls">
+
+                <input
+                    type="search"
+                    id="search-card"
+                    placeholder="Buscar una carta..."
+                    aria-label="Buscar una carta"
+                >
+
+            </div>
+
+
+            <!-- CATEGORÍAS -->
+
+            <div class="library-tabs" role="tablist"
+                 aria-label="Categorías del tarot">
+
+                <button
+                    class="category-tab active"
+                    data-category="mayores"
+                    role="tab"
+                    aria-selected="true"
+                >
+                    ✧ Arcanos Mayores
+                </button>
+
+                <button
+                    class="category-tab"
+                    data-category="Copas"
+                    role="tab"
+                    aria-selected="false"
+                >
+                    ♡ Copas
+                </button>
+
+                <button
+                    class="category-tab"
+                    data-category="Espadas"
+                    role="tab"
+                    aria-selected="false"
+                >
+                    ⚔ Espadas
+                </button>
+
+                <button
+                    class="category-tab"
+                    data-category="Bastos"
+                    role="tab"
+                    aria-selected="false"
+                >
+                    ✧ Bastos
+                </button>
+
+                <button
+                    class="category-tab"
+                    data-category="Oros"
+                    role="tab"
+                    aria-selected="false"
+                >
+                    ◈ Oros
+                </button>
+
+            </div>
+
+
+            <p id="library-count" class="library-count">
+                22 cartas
+            </p>
+
+
+            <!-- CONTENEDOR DE LAS 78 CARTAS -->
+
+            <div
+                id="tarot-library"
+                class="tarot-library"
+                aria-live="polite"
+            ></div>
+
+        </section>
+
+
+        <!-- ==================================
+             05. HISTORIAL
+        =================================== -->
+
+        <section id="historial" class="section page-section">
+
+            <div class="section-heading">
+
+                <span class="section-subtitle">
+                    TU RECORRIDO
+                </span>
+
+                <h2>Historial de lecturas</h2>
+
+                <p>
+                    Volvé a descubrir las cartas que aparecieron
+                    en tus lecturas anteriores.
+                </p>
+
+            </div>
+
+
+            <div class="history-actions">
+
+                <button
+                    id="clear-history"
+                    class="secondary-button"
+                >
+                    Borrar historial
+                </button>
+
+            </div>
+
+
+            <div id="reading-history" class="reading-history">
+
+                <p class="history-empty">
+                    Todavía no tenés lecturas guardadas.
+                    Realizá una tirada para comenzar.
+                </p>
+
+            </div>
+
+        </section>
+
+    </main>
+
+
+    <!-- ==================================
+         PIE DE PÁGINA
+    =================================== -->
+
+    <footer class="footer">
+
+        <p>✧ TAROT ARCANO ✧</p>
+
+        <p>Un viaje hacia el conocimiento interior.</p>
+
+        <a href="#inicio">Volver al inicio ↑</a>
+
+    </footer>
+
+
+    <!-- ==================================
+         MODAL DE LA BIBLIOTECA
+    =================================== -->
+
+    <div
+        class="library-modal"
+        id="library-modal"
+        aria-hidden="true"
+    >
+
+        <button
+            type="button"
+            class="library-modal-close"
+            aria-label="Cerrar"
+        >
+            ×
+        </button>
+
+        <div
+            class="library-modal-content"
+            role="dialog"
+            aria-modal="true"
+            aria-label="Información de la carta"
+        >
+
+            <div
+                class="library-modal-body"
+                id="library-modal-body"
+            ></div>
+
+        </div>
+
+    </div>
+
+
+    <script src="script.js"></script>
+
+</body>
+</html>
+
+
