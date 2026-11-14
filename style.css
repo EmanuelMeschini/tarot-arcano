@@ -1,2839 +1,844 @@
-/* ==========================================
-   TAROT ARCANO
-   ESPÍRITU Y ORIGEN
-   DISEÑO MÍSTICO Y ASTROLÓGICO
-========================================== */
+/* =========================================================
+   TAROT ARCANO · ESPÍRITU Y ORIGEN
+   Rediseño adaptable para escritorio, tablet y celular
+   Mantiene los selectores utilizados por script.js
+========================================================= */
 
-/* 1. PALETA DE COLORES */
+@import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600;700&family=Manrope:wght@400;500;600;700&display=swap');
 
 :root {
+    color-scheme: dark;
     --carbon: #100e1c;
-    --carbon-light: #1b1730;
+    --carbon-light: #191529;
+    --panel: rgba(34, 27, 49, .82);
+    --panel-soft: rgba(255, 255, 255, .035);
     --terracotta: #302342;
-    --red: #694875;
-    --red-light: #9872a8;
-    --green: #26364b;
-    --green-light: #3c526c;
+    --violet: #9872a8;
+    --violet-soft: rgba(152, 114, 168, .16);
+    --blue-soft: rgba(75, 105, 139, .15);
     --gold: #c3a66b;
-    --gold-light: #e8d4a5;
+    --gold-light: #ead8ad;
     --cream: #eee7dc;
     --muted: #b8aec5;
     --white: #fffaf0;
-
-    --border: rgba(195, 166, 107, 0.32);
-    --shadow: 0 15px 40px rgba(0, 0, 0, 0.4);
-
-    --violet-glow: rgba(139, 99, 170, 0.18);
-    --gold-glow: rgba(195, 166, 107, 0.18);
+    --border: rgba(195, 166, 107, .26);
+    --border-strong: rgba(195, 166, 107, .55);
+    --shadow: 0 18px 55px rgba(0, 0, 0, .32);
+    --radius: 22px;
+    --radius-small: 14px;
+    --content-width: 1160px;
+    --page-gutter: clamp(18px, 5vw, 64px);
 }
 
-/* 2. CONFIGURACIÓN GENERAL */
-
-* {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-}
-
-html {
-    scroll-behavior: smooth;
-    scroll-padding-top: 20px;
-}
-
+* { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; scroll-padding-top: 105px; }
 body {
     position: relative;
     isolation: isolate;
     min-height: 100vh;
     overflow-x: hidden;
-
-    font-family: "Trebuchet MS", Arial, sans-serif;
     color: var(--cream);
-    line-height: 1.7;
-    text-align: center;
-
     background:
-        radial-gradient(ellipse at 12% 12%, rgba(83, 54, 116, 0.25), transparent 38%),
-        radial-gradient(ellipse at 88% 65%, rgba(39, 67, 94, 0.25), transparent 38%),
-        radial-gradient(ellipse at 50% 100%, rgba(90, 62, 105, 0.13), transparent 45%),
+        radial-gradient(ellipse at 8% 10%, rgba(104, 69, 133, .22), transparent 34%),
+        radial-gradient(ellipse at 92% 42%, rgba(53, 86, 119, .16), transparent 34%),
+        radial-gradient(ellipse at 50% 100%, rgba(117, 82, 139, .12), transparent 42%),
         var(--carbon);
+    font-family: 'Manrope', 'Trebuchet MS', sans-serif;
+    font-size: 16px;
+    line-height: 1.7;
+    -webkit-font-smoothing: antialiased;
 }
-
 body::before {
     content: "";
     position: fixed;
     inset: 0;
     z-index: -1;
     pointer-events: none;
-
+    opacity: .48;
     background-image:
-        radial-gradient(1px 1px at 10% 20%, rgba(232, 212, 165, 0.65) 50%, transparent 100%),
-        radial-gradient(1px 1px at 25% 75%, rgba(232, 212, 165, 0.55) 50%, transparent 100%),
-        radial-gradient(2px 2px at 50% 35%, rgba(232, 212, 165, 0.45) 50%, transparent 100%),
-        radial-gradient(1px 1px at 75% 15%, rgba(232, 212, 165, 0.6) 50%, transparent 100%),
-        radial-gradient(1px 1px at 90% 80%, rgba(232, 212, 165, 0.5) 50%, transparent 100%),
-        radial-gradient(circle at 20% 30%, rgba(139, 99, 170, 0.08), transparent 25%),
-        radial-gradient(circle at 80% 70%, rgba(195, 166, 107, 0.07), transparent 25%);
-
-    background-size: 280px 280px, 340px 340px, 400px 400px, 300px 300px, 360px 360px, auto, auto;
-
-    animation: ambienteMagico 14s ease-in-out infinite alternate;
+        radial-gradient(1px 1px at 10% 20%, rgba(234,216,173,.8) 50%, transparent 100%),
+        radial-gradient(1px 1px at 25% 75%, rgba(234,216,173,.6) 50%, transparent 100%),
+        radial-gradient(2px 2px at 50% 35%, rgba(234,216,173,.55) 50%, transparent 100%),
+        radial-gradient(1px 1px at 75% 15%, rgba(234,216,173,.7) 50%, transparent 100%),
+        radial-gradient(1px 1px at 90% 80%, rgba(234,216,173,.55) 50%, transparent 100%);
+    background-size: 280px 280px, 340px 340px, 400px 400px, 300px 300px, 360px 360px;
+    animation: starDrift 22s ease-in-out infinite alternate;
 }
-
-body.library-modal-open {
-    overflow: hidden;
-}
-
-/* 3. TEXTOS Y ENLACES */
+body.library-modal-open { overflow: hidden; }
+::selection { color: var(--carbon); background: var(--gold-light); }
 
 h1, h2, h3, h4, h5, h6 {
     color: var(--gold-light);
-    font-family: Georgia, serif;
-    font-weight: normal;
+    font-family: 'Cormorant Garamond', Georgia, serif;
+    font-weight: 500;
+    line-height: 1.15;
 }
-
-p, span, label, li, small, strong, em {
-    color: var(--cream);
-}
-
-a,
-a:link,
-a:visited,
-a:active {
-    color: var(--gold-light);
-    text-decoration: none;
-    transition: color 0.3s ease;
-}
-
-a:hover {
-    color: var(--gold);
-}
-
-::selection {
-    background: var(--gold);
-    color: var(--carbon);
-}
-
-/* 4. ENCABEZADO */
-
-header {
-    position: relative;
-    padding: 55px 20px 40px;
-    text-align: center;
-    overflow: hidden;
-
-    background:
-        radial-gradient(circle at 50% 0%, rgba(126, 87, 151, 0.25), transparent 60%),
-        linear-gradient(135deg, #21182f, #100e1c 60%, #1c263a);
-
-    border-bottom: 1px solid var(--border);
-}
-
-header::before {
-    content: "☽";
-    display: block;
-    margin-bottom: 10px;
-    color: var(--gold);
-    font-size: 42px;
-    text-shadow: 0 0 22px var(--gold-glow);
-}
-
-header h1 {
-    color: var(--cream);
-    font-size: clamp(2.2rem, 6vw, 4rem);
-    letter-spacing: 5px;
-    text-transform: uppercase;
-    text-shadow: 0 0 25px rgba(195, 166, 107, 0.18);
-}
-
-header p {
-    margin-top: 12px;
-    color: var(--gold-light);
-    font-size: 0.9rem;
-    letter-spacing: 2px;
-}
-
-/* 5. NAVEGACIÓN */
-
-nav {
-    position: relative;
-    top: auto;
-    z-index: 100;
-
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    flex-wrap: wrap;
-    gap: 8px;
-
-    padding: 14px;
-
-    background: rgba(16, 14, 28, 0.96);
-    border-bottom: 1px solid var(--border);
-    backdrop-filter: blur(12px);
-}
-
-nav a {
-    padding: 9px 16px;
-    color: var(--cream);
-    font-size: 0.85rem;
-    letter-spacing: 1px;
-    border-radius: 25px;
-    transition: 0.3s ease;
-}
-
-nav a:hover {
-    color: var(--carbon);
-    background: var(--gold);
-}
-
-/* 6. PORTADA */
-
-.hero {
-    position: relative;
-    isolation: isolate;
-
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-
-    max-width: 1100px;
-    min-height: 85vh;
-
-    margin: 55px auto;
-    padding: 85px 25px;
-
-    text-align: center;
-    border-radius: 12px;
-    overflow: hidden;
-
-    background:
-        radial-gradient(circle at 50% 45%, rgba(119, 81, 145, 0.25), transparent 55%),
-        linear-gradient(rgba(16, 14, 28, 0.65), rgba(16, 14, 28, 0.9)),
-        linear-gradient(135deg, #302342, #17243a);
-
-    border: 1px solid var(--border);
-    box-shadow: var(--shadow);
-
-    animation: aparecer 0.9s ease both;
-}
-
-.hero::before,
-.hero::after {
-    position: absolute;
-    color: var(--gold);
-    font-size: 35px;
-    text-shadow: 0 0 20px var(--gold-glow);
-    pointer-events: none;
-}
-
-.hero::before {
-    content: "☽";
-    top: 20px;
-    left: 25px;
-}
-
-.hero::after {
-    content: "✧";
-    right: 25px;
-    bottom: 20px;
-}
-
-.hero h2 {
-    margin-bottom: 20px;
-    font-size: clamp(2rem, 5vw, 3.3rem);
-}
-
-.hero p {
-    max-width: 650px;
-    margin: auto;
-    color: var(--cream);
-    font-size: 1.1rem;
-}
-
-/* 7. BOTONES */
-
-button,
-.btn {
-    position: relative;
-
-    display: flex;
-    align-items: center;
-    justify-content: center;
-
-    width: fit-content;
-    max-width: 100%;
-
-    margin: 14px auto;
-    padding: 13px 28px;
-
-    color: var(--gold-light);
-    background: transparent;
-
-    border: 1px solid var(--gold);
-    border-radius: 30px;
-
-    font-family: Georgia, serif;
-    font-size: 0.9rem;
-    font-weight: normal;
-    letter-spacing: 1.5px;
-    text-transform: uppercase;
-
-    cursor: pointer;
-    overflow: hidden;
-
-    transition:
-        color 0.35s ease,
-        border-color 0.35s ease,
-        box-shadow 0.35s ease,
-        transform 0.35s ease,
-        background 0.35s ease;
-}
-
-button::before,
-.btn::before {
-    content: "✧";
-    margin-right: 10px;
-    color: var(--gold);
-    transition: 0.3s ease;
-}
-
-button:hover,
-.btn:hover {
-    color: var(--white);
-    background: rgba(195, 166, 107, 0.09);
-    border-color: var(--gold-light);
-
-    box-shadow:
-        0 0 10px var(--gold-glow),
-        0 0 25px rgba(195, 166, 107, 0.12);
-
-    transform: translateY(-3px);
-}
-
-button:hover::before,
-.btn:hover::before {
-    content: "☽";
-    color: var(--gold-light);
-}
-
-button:active,
-.btn:active {
-    transform: scale(0.97);
-}
-
-button::after,
-.btn::after {
-    content: "";
-    position: absolute;
-    top: 0;
-    left: -120%;
-
-    width: 70%;
-    height: 100%;
-
-    background: linear-gradient(
-        110deg,
-        transparent,
-        rgba(232, 212, 165, 0.18),
-        transparent
-    );
-
-    transition: left 0.6s ease;
-    pointer-events: none;
-}
-
-button:hover::after,
-.btn:hover::after {
-    left: 140%;
-}
-
-button:disabled {
-    opacity: 0.4;
-    cursor: not-allowed;
-    transform: none;
-    box-shadow: none;
-}
-
-button:focus-visible,
-.btn:focus-visible {
+p { color: var(--cream); }
+a { color: var(--gold-light); text-decoration: none; transition: color .25s ease; }
+a:hover { color: var(--gold); }
+button, input { font: inherit; }
+button { color: inherit; }
+button:focus-visible, a:focus-visible, input:focus-visible, summary:focus-visible {
     outline: 2px solid var(--gold-light);
     outline-offset: 4px;
 }
 
-.button-container,
-.buttons-container {
+/* Constelaciones decorativas existentes en index.html */
+.constellation {
+    position: absolute;
+    top: 220px;
+    z-index: -1;
+    width: clamp(70px, 12vw, 155px);
+    opacity: .32;
+    pointer-events: none;
+}
+.constellation-left { left: 0; }
+.constellation-right { right: 0; }
+.constellation svg { display: block; width: 100%; height: auto; overflow: visible; }
+.constellation path { fill: none; stroke: var(--gold); stroke-width: 1; opacity: .65; }
+.constellation circle { fill: var(--gold-light); filter: drop-shadow(0 0 5px var(--gold)); }
+
+/* Encabezado y navegación */
+.header {
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 24px;
+    width: 100%;
+    padding: 15px var(--page-gutter);
+    background: rgba(16, 14, 28, .88);
+    border-bottom: 1px solid rgba(195, 166, 107, .18);
+    backdrop-filter: blur(18px);
+    -webkit-backdrop-filter: blur(18px);
+}
+.logo {
+    flex: 0 0 auto;
+    color: var(--gold-light);
+    font-family: 'Cormorant Garamond', Georgia, serif;
+    font-size: 1.35rem;
+    font-weight: 600;
+    letter-spacing: .16em;
+    white-space: nowrap;
+}
+.logo:hover { color: var(--white); }
+.navigation {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    flex-wrap: wrap;
+    gap: 5px;
+}
+.navigation a {
+    padding: 8px 12px;
+    color: var(--muted);
+    font-size: .82rem;
+    font-weight: 600;
+    border-radius: 999px;
+    transition: color .25s ease, background .25s ease;
+}
+.navigation a:hover, .navigation a:focus-visible {
+    color: var(--gold-light);
+    background: rgba(195, 166, 107, .1);
+}
+
+/* Portada */
+.hero {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    min-height: min(690px, 82vh);
+    padding: clamp(90px, 13vw, 165px) 22px clamp(90px, 12vw, 145px);
+    text-align: center;
+    overflow: hidden;
+}
+.hero::before {
+    content: "✧";
+    position: absolute;
+    top: 13%;
+    left: 50%;
+    color: rgba(234, 216, 173, .22);
+    font-size: clamp(130px, 22vw, 250px);
+    line-height: 1;
+    transform: translateX(-50%);
+    pointer-events: none;
+    text-shadow: 0 0 65px rgba(195,166,107,.12);
+}
+.hero::after {
+    content: "";
+    position: absolute;
+    left: 50%;
+    bottom: 8%;
+    width: min(540px, 78vw);
+    height: 1px;
+    background: linear-gradient(90deg, transparent, var(--gold), transparent);
+    opacity: .55;
+    transform: translateX(-50%);
+}
+.subtitle, .section-subtitle {
+    display: inline-block;
+    color: var(--gold);
+    font-size: .72rem;
+    font-weight: 700;
+    letter-spacing: .24em;
+    line-height: 1.6;
+    text-transform: uppercase;
+}
+.hero .subtitle { position: relative; z-index: 1; margin-bottom: 22px; }
+.hero h1 {
+    position: relative;
+    z-index: 1;
+    max-width: 900px;
+    color: var(--white);
+    font-size: clamp(3.2rem, 8vw, 6.5rem);
+    font-weight: 500;
+    letter-spacing: -.035em;
+    line-height: .98;
+    text-shadow: 0 8px 45px rgba(0,0,0,.28), 0 0 35px rgba(195,166,107,.1);
+}
+.hero-description {
+    position: relative;
+    z-index: 1;
+    max-width: 590px;
+    margin: 28px auto 34px;
+    color: var(--muted);
+    font-size: clamp(.98rem, 1.5vw, 1.12rem);
+    line-height: 1.9;
+}
+
+/* Botones */
+.main-button, .secondary-button {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 48px;
+    padding: 12px 24px;
+    color: var(--carbon);
+    background: linear-gradient(135deg, var(--gold-light), var(--gold));
+    border: 1px solid rgba(234,216,173,.7);
+    border-radius: 999px;
+    box-shadow: 0 8px 24px rgba(195,166,107,.13);
+    font-size: .86rem;
+    font-weight: 800;
+    letter-spacing: .02em;
+    cursor: pointer;
+    transition: transform .25s ease, box-shadow .25s ease, filter .25s ease;
+}
+.main-button:hover, .secondary-button:hover {
+    color: var(--carbon);
+    filter: brightness(1.06);
+    transform: translateY(-2px);
+    box-shadow: 0 12px 30px rgba(195,166,107,.23);
+}
+.main-button:active, .secondary-button:active { transform: translateY(0); }
+.secondary-button {
+    color: var(--gold-light);
+    background: rgba(195,166,107,.08);
+    border-color: var(--border-strong);
+    box-shadow: none;
+}
+.secondary-button:hover { color: var(--white); background: rgba(195,166,107,.15); }
+
+/* Secciones */
+main { width: 100%; }
+.section, .page-section:not(.hero) {
+    width: min(100% - (var(--page-gutter) * 2), var(--content-width));
+    margin: 0 auto;
+    padding: clamp(70px, 9vw, 112px) 0;
+    scroll-margin-top: 85px;
+}
+.section + .section { border-top: 1px solid rgba(195,166,107,.12); }
+.section-heading, .reading-active-heading {
+    max-width: 700px;
+    margin: 0 auto 42px;
+    text-align: center;
+}
+.section-heading .section-subtitle, .reading-active-heading .section-subtitle { margin-bottom: 12px; }
+.section-heading h2, .reading-active-heading h2 {
+    margin: 5px 0 12px;
+    color: var(--white);
+    font-size: clamp(2.5rem, 5vw, 3.7rem);
+    letter-spacing: -.02em;
+}
+.section-heading p, .reading-active-heading p {
+    max-width: 620px;
+    margin: 0 auto;
+    color: var(--muted);
+    font-size: .98rem;
+    line-height: 1.85;
+}
+
+/* Carta del día */
+#carta-dia { text-align: center; }
+.card-container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    min-height: 180px;
+    margin: 0 auto 28px;
+}
+.daily-card-container {
     display: flex;
     justify-content: center;
-    align-items: center;
-    flex-wrap: wrap;
-    gap: 12px;
-    text-align: center;
-}
-
-.button-container button,
-.buttons-container button,
-.button-container .btn,
-.buttons-container .btn,
-nav button,
-nav .btn {
-    margin: 0;
-}
-
-/* 8. SECCIONES */
-
-section {
-    max-width: 1150px;
-    margin: 45px auto;
-    padding: 35px 25px;
-
-    background:
-        radial-gradient(circle at top right, rgba(112, 78, 142, 0.08), transparent 45%),
-        rgba(27, 23, 48, 0.94);
-
-    border: 1px solid var(--border);
-    border-radius: 10px;
-    box-shadow: var(--shadow);
-
-    animation: aparecer 0.9s ease both;
-}
-
-section h2 {
-    margin-bottom: 30px;
-    font-size: 1.8rem;
-    text-align: center;
-}
-
-section h2::after {
-    content: "☽ ━━━━━ ✧ ━━━━━ ☾";
-    display: block;
-    margin-top: 10px;
-
-    color: var(--gold);
-    font-size: 0.8rem;
-    letter-spacing: 3px;
-}
-
-/* Secciones independientes */
-
-.page-section {
-    position: relative;
     width: 100%;
-    min-height: 80vh;
-    padding: 100px 24px;
-    box-sizing: border-box;
+    max-width: 500px;
+    margin: 0 auto;
 }
-
-.page-section:not(.hero) {
-    border-top: 1px solid rgba(195, 166, 107, 0.22);
+.daily-card-back {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 14px;
+    width: min(100%, 310px);
+    aspect-ratio: 2 / 3;
+    padding: 28px;
+    overflow: hidden;
+    color: var(--gold-light);
+    background:
+        radial-gradient(circle at 50% 45%, rgba(195,166,107,.2), transparent 48%),
+        linear-gradient(145deg, #302342, #171326 72%);
+    border: 1px solid var(--gold);
+    border-radius: 18px;
+    box-shadow: 0 22px 55px rgba(0,0,0,.35), 0 0 32px rgba(195,166,107,.12);
+    cursor: pointer;
+    transition: transform .35s ease, box-shadow .35s ease;
 }
-
-.section-heading {
-    max-width: 750px;
-    margin: 0 auto 45px;
-    text-align: center;
+.daily-card-back::before, .daily-card-back::after {
+    content: "";
+    position: absolute;
+    inset: 13px;
+    border: 1px solid rgba(234,216,173,.48);
+    border-radius: 11px;
+    pointer-events: none;
 }
+.daily-card-back::after { inset: 23px; border-color: rgba(234,216,173,.18); }
+.daily-card-back:hover { transform: translateY(-7px) rotate(-1deg); box-shadow: 0 28px 65px rgba(0,0,0,.4), 0 0 42px rgba(195,166,107,.2); }
+.daily-card-back-symbol { color: var(--gold-light); font-size: 4.5rem; line-height: 1; text-shadow: 0 0 25px rgba(195,166,107,.4); }
+.daily-card-back-title { font-family: 'Cormorant Garamond', Georgia, serif; font-size: 1.25rem; letter-spacing: .22em; text-transform: uppercase; }
+.daily-card-back-subtitle { color: var(--muted); font-size: .9rem; }
+.daily-card-back-hint { margin-top: 8px; color: var(--gold); font-size: .76rem; letter-spacing: .08em; }
+.daily-card-revealed { animation: cardArrival .7s ease both; }
+#daily-card .tarot-card { width: 100%; max-width: 500px; margin: 0 auto; }
+#daily-card .tarot-card-image { max-height: 520px; object-fit: contain; }
+#daily-card .tarot-card-information { text-align: left; }
+#daily-card .tarot-card-meaning p { text-align: left; }
 
-/* 9. OPCIONES DE LECTURA */
-
+/* Tarjetas de opciones de tirada */
 .reading-options {
     display: grid;
     grid-template-columns: repeat(3, minmax(0, 1fr));
-    gap: 25px;
-
-    max-width: 1100px;
-    margin: 50px auto;
+    gap: 20px;
+    width: 100%;
+    margin: 42px auto 35px;
 }
-
-.reading-options > * {
-    padding: 25px;
-    text-align: center;
-
-    background:
-        radial-gradient(circle at top, rgba(139, 99, 170, 0.13), transparent 65%),
-        linear-gradient(145deg, #302342, #1b1730);
-
-    border: 1px solid var(--border);
-    border-radius: 10px;
-
-    transition: 0.3s ease;
-}
-
-.reading-options > *:hover {
-    transform: translateY(-5px);
-    border-color: var(--gold);
-    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.25);
-}
-
 .reading-card {
-    padding: 30px 22px;
-    text-align: center;
-
-    border: 1px solid var(--border);
-    border-radius: 14px;
-
-    background: rgba(255, 255, 255, 0.025);
-
-    transition: transform 0.3s ease, border-color 0.3s ease;
-}
-
-.reading-card:hover {
-    transform: translateY(-5px);
-    border-color: var(--gold);
-}
-
-.reading-icon {
-    display: block;
-    margin-bottom: 15px;
-    color: var(--gold);
-    font-size: 35px;
-}
-
-/* 10. ESTILOS GENERALES DE LAS CARTAS */
-
-.tarot-card {
-    position: relative;
-
     display: flex;
     flex-direction: column;
     align-items: center;
-    justify-content: space-between;
-
-    width: 220px;
-    min-height: 370px;
-
-    padding: 14px;
-
-    overflow: hidden;
-    text-align: center;
-
-    background:
-        radial-gradient(circle at 50% 40%, rgba(139, 99, 170, 0.18), transparent 55%),
-        linear-gradient(150deg, #302342, #171329 65%, #26364b);
-
-    border: 2px solid var(--gold);
-    border-radius: 8px;
-
-    box-shadow: var(--shadow);
-
-    transition:
-        transform 0.45s ease,
-        box-shadow 0.45s ease,
-        border-color 0.45s ease;
-}
-
-.tarot-card::before {
-    content: "✧";
-    position: absolute;
-    top: 8px;
-    left: 12px;
-    color: var(--gold);
-    pointer-events: none;
-}
-
-.tarot-card::after {
-    content: "✧";
-    position: absolute;
-    right: 12px;
-    bottom: 8px;
-    color: var(--gold);
-    pointer-events: none;
-}
-
-.tarot-card:hover {
-    border-color: var(--gold-light);
-    box-shadow: var(--shadow);
-    transform: none;
-}
-
-.tarot-card-header {
-    width: 100%;
-    color: var(--gold-light);
-    font-size: 0.75rem;
-    letter-spacing: 2px;
-    text-transform: uppercase;
-}
-
-.tarot-card-art {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-
-    width: 100%;
-    min-height: 185px;
-
-    margin: 12px 0;
-
-    color: var(--gold);
-    font-size: 4rem;
-
-    background: radial-gradient(circle, #49345d, var(--carbon) 75%);
-    border: 1px solid var(--border);
-}
-
-.tarot-card-art.has-image {
-    min-height: 0;
-    aspect-ratio: 2 / 3;
-    overflow: hidden;
-    background: var(--carbon);
-}
-
-.tarot-card-art img {
-    display: block;
-    width: 100%;
-    height: 100%;
-    object-fit: contain;
-    transition: transform 0.7s ease;
-}
-
-.tarot-card h3 {
-    color: var(--gold-light);
-    font-size: 1.2rem;
-}
-
-.tarot-card-number {
-    color: var(--muted);
-    font-size: 0.8rem;
-}
-
-.tarot-card-keywords {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: center;
-    gap: 5px;
-    margin-top: 10px;
-}
-
-.tarot-card-keywords span {
-    padding: 4px 8px;
-
-    color: var(--cream);
-    font-size: 0.7rem;
-
-    background: rgba(60, 82, 108, 0.7);
-    border: 1px solid rgba(195, 166, 107, 0.18);
-    border-radius: 20px;
-}
-
-.tarot-card:hover .tarot-card-art img {
-    transform: none;
-}
-
-/* 11. CARTA DEL DÍA */
-
-#daily-card {
-    display: flex;
-    justify-content: center;
-    align-items: flex-start;
-
-    width: 100%;
-    margin: 40px auto;
-
-    text-align: center;
-}
-
-#daily-card h3 {
-    margin: 18px 0;
-    font-size: 1.5rem;
-}
-
-#daily-card p {
-    color: var(--cream);
-}
-
-#daily-card .daily-card-container {
-    width: 100%;
-    max-width: 950px;
-    margin: 0 auto;
-}
-
-/* 12. CARTA DEL DÍA - DORSO */
-
-#daily-card .daily-card-back {
-    position: relative;
-
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    gap: 16px;
-
-    width: 250px;
-    height: 375px;
-    max-width: 90%;
-    min-height: 0;
-
-    margin: 25px auto;
-    padding: 25px;
-
-    box-sizing: border-box;
-    overflow: hidden;
-
-    color: var(--gold-light);
-
-    background:
-        radial-gradient(circle at center, rgba(195, 166, 107, 0.18), transparent 65%),
-        repeating-linear-gradient(45deg, transparent, transparent 10px, rgba(195, 166, 107, 0.045) 10px, rgba(195, 166, 107, 0.045) 11px),
-        linear-gradient(145deg, #302342, #100e1c);
-
-    border: 2px solid var(--gold);
-    border-radius: 14px;
-
-    box-shadow:
-        0 0 0 6px rgba(195, 166, 107, 0.07),
-        0 15px 35px rgba(0, 0, 0, 0.5),
-        inset 0 0 0 5px rgba(195, 166, 107, 0.12);
-
-    cursor: pointer;
-    text-transform: none;
-    letter-spacing: normal;
-
-    transition:
-        transform 0.4s ease,
-        box-shadow 0.4s ease,
-        border-color 0.4s ease;
-}
-
-#daily-card .daily-card-back::before {
-    content: "☾";
-    position: absolute;
-    top: 50%;
-    left: 50%;
-
-    display: block;
-    margin: 0;
-
-    transform: translate(-50%, -50%);
-
-    color: var(--gold);
-    font-size: 145px;
-    opacity: 0.12;
-
-    pointer-events: none;
-}
-
-#daily-card .daily-card-back::after {
-    content: "";
-    position: absolute;
-    inset: 12px;
-
-    border: 1px solid rgba(195, 166, 107, 0.65);
-    border-radius: 8px;
-
-    pointer-events: none;
-}
-
-#daily-card .daily-card-back-symbol {
-    position: relative;
-    z-index: 1;
-
-    color: var(--gold);
-    font-size: 55px;
-    line-height: 1;
-}
-
-#daily-card .daily-card-back-title {
-    position: relative;
-    z-index: 1;
-
-    color: var(--gold-light);
-    font-family: Georgia, serif;
-    font-size: 19px;
-    letter-spacing: 3px;
-}
-
-#daily-card .daily-card-back-subtitle {
-    position: relative;
-    z-index: 1;
-
-    color: var(--cream);
-    font-size: 13px;
-    letter-spacing: 1px;
-}
-
-#daily-card .daily-card-back-hint {
-    position: relative;
-    z-index: 1;
-
-    margin-top: 20px;
-
-    color: var(--muted);
-    font-size: 11px;
-    letter-spacing: 1px;
-}
-
-@media (hover: hover) {
-    #daily-card .daily-card-back:hover {
-        transform: translateY(-7px) scale(1.025);
-        border-color: var(--gold-light);
-
-        box-shadow:
-            0 20px 45px rgba(0, 0, 0, 0.6),
-            0 0 25px var(--gold-glow);
-    }
-}
-
-#daily-card .daily-card-back:focus-visible {
-    outline: 3px solid var(--gold-light);
-    outline-offset: 5px;
-}
-
-/* 13. CARTA DEL DÍA - DISEÑO HORIZONTAL */
-
-#daily-card .tarot-card.tarot-card-horizontal {
-    position: relative;
-
-    display: grid;
-    grid-template-columns: minmax(260px, 340px) minmax(0, 1fr);
-
-    align-items: center;
-    gap: 38px;
-
-    width: 100%;
-    max-width: 950px;
-    min-height: 480px;
-    height: auto;
-
-    margin: 0 auto;
-    padding: 35px;
-
-    box-sizing: border-box;
-    overflow: hidden;
-    text-align: left;
-
-    background:
-        radial-gradient(circle at 15% 50%, rgba(139, 99, 170, 0.18), transparent 50%),
-        linear-gradient(145deg, #302342, #171329 65%, #26364b);
-
-    border: 2px solid var(--gold);
-    border-radius: 12px;
-    box-shadow: var(--shadow);
-}
-
-#daily-card .tarot-card-visual {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-
-    width: 100%;
     min-width: 0;
-}
-
-#daily-card .tarot-card-image-container {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-
-    width: 100%;
-    max-width: 340px;
-
-    margin: 0 auto;
-    overflow: hidden;
-
-    background: var(--carbon);
-    border: 1px solid var(--border);
-    border-radius: 9px;
-}
-
-#daily-card .tarot-card-image {
-    display: block;
-
-    width: 100%;
-    height: auto;
-    max-height: 470px;
-
-    object-fit: contain;
-    border-radius: 8px;
-
-    transition: transform 0.8s ease;
-}
-
-#daily-card .tarot-card-image.image-reversed {
-    transform: rotate(180deg);
-}
-
-#daily-card .tarot-card-image-placeholder {
-    display: grid;
-    place-items: center;
-
-    width: 100%;
-    aspect-ratio: 2 / 3;
-
-    color: var(--gold);
-    font-size: 5rem;
-
-    background: radial-gradient(circle, #49345d, var(--carbon) 75%);
-}
-
-#daily-card .tarot-card-visual .tarot-card-number {
-    margin-top: 15px;
-    color: var(--muted);
-    font-size: 0.9rem;
+    min-height: 260px;
+    padding: 28px 24px;
     text-align: center;
-}
-
-#daily-card .tarot-card-information {
-    display: flex;
-    flex-direction: column;
-    align-items: flex-start;
-
-    width: 100%;
-    min-width: 0;
-
-    text-align: left;
-}
-
-#daily-card .tarot-card-information .tarot-card-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    flex-wrap: wrap;
-    gap: 10px;
-
-    width: 100%;
-    margin-bottom: 10px;
-
-    color: var(--gold-light);
-    font-size: 0.8rem;
-    letter-spacing: 1.5px;
-    text-align: left;
-}
-
-#daily-card .tarot-card-information h3 {
-    width: 100%;
-
-    margin: 12px 0 22px;
-
-    color: var(--gold-light);
-    font-family: Georgia, serif;
-    font-size: clamp(1.7rem, 3vw, 2.3rem);
-    line-height: 1.2;
-
-    text-align: left;
-}
-
-#daily-card .tarot-card-meaning {
-    width: 100%;
-    text-align: left;
-}
-
-#daily-card .tarot-card-meaning h4 {
-    margin-bottom: 12px;
-
-    color: var(--gold-light);
-    font-family: Georgia, serif;
-    font-size: 1.15rem;
-
-    text-align: left;
-}
-
-#daily-card .tarot-card-meaning p {
-    margin: 0;
-
-    color: var(--cream);
-    font-size: 1rem;
-    line-height: 1.9;
-
-    text-align: left;
-    overflow-wrap: anywhere;
-}
-
-#daily-card .tarot-card-information .tarot-card-keywords {
-    display: flex;
-    justify-content: flex-start;
-    align-items: center;
-    flex-wrap: wrap;
-    gap: 9px;
-
-    width: 100%;
-    margin-top: 25px;
-}
-
-#daily-card .tarot-card-information .tarot-card-keywords span {
-    padding: 6px 12px;
-
-    color: var(--cream);
-    background: rgba(60, 82, 108, 0.7);
-
+    background: linear-gradient(145deg, rgba(48,35,66,.72), rgba(25,21,41,.88));
     border: 1px solid var(--border);
-    border-radius: 20px;
-
-    font-size: 0.78rem;
+    border-radius: var(--radius);
+    box-shadow: 0 12px 35px rgba(0,0,0,.13);
+    transition: transform .28s ease, border-color .28s ease, background .28s ease, box-shadow .28s ease;
 }
+.reading-card:hover { transform: translateY(-5px); border-color: var(--border-strong); background: linear-gradient(145deg, rgba(65,47,83,.8), rgba(25,21,41,.95)); box-shadow: var(--shadow); }
+.reading-icon { display: block; margin-bottom: 12px; color: var(--gold); font-size: 2rem; line-height: 1; }
+.reading-card h3 { margin-bottom: 10px; color: var(--gold-light); font-size: 1.65rem; }
+.reading-card p { flex: 1; max-width: 310px; margin-bottom: 22px; color: var(--muted); font-size: .88rem; line-height: 1.75; }
+.reading-card .main-button { min-height: 42px; padding: 10px 20px; font-size: .78rem; }
 
-#daily-card .daily-card-revealed {
-    animation: revealDailyCard 0.8s ease both;
+/* Tirada activa y cartas */
+#three-reading, .three-reading { width: 100%; max-width: 1120px; margin: 38px auto 0; scroll-margin-top: 100px; }
+.reading-active {
+    padding: clamp(20px, 4vw, 38px);
+    background: linear-gradient(145deg, rgba(32,26,47,.78), rgba(19,17,31,.86));
+    border: 1px solid rgba(195,166,107,.2);
+    border-radius: 26px;
+    box-shadow: var(--shadow);
+    animation: fadeUp .55s ease both;
 }
-
-@keyframes revealDailyCard {
-    from {
-        opacity: 0;
-        transform: perspective(1000px) rotateY(20deg) translateY(15px);
-    }
-
-    to {
-        opacity: 1;
-        transform: perspective(1000px) rotateY(0) translateY(0);
-    }
-}
-
-/* 14. TIRADAS DE TRES Y CUATRO CARTAS */
-
-#three-reading,
-.three-reading {
-    width: 100%;
-    max-width: 1100px;
-    margin: 35px auto;
-    text-align: center;
-}
-
-#three-reading .reading-cards,
+.reading-active-heading { margin-bottom: 35px; }
 .reading-cards {
     display: grid;
     grid-template-columns: repeat(3, minmax(0, 1fr));
-
     justify-items: center;
     align-items: start;
-    gap: 22px;
-
+    column-gap: clamp(18px, 3vw, 34px);
+    row-gap: 34px;
     width: 100%;
-    margin: 25px auto;
+    margin: 30px auto;
 }
-
-#three-reading .reading-position,
 .reading-position {
     display: flex;
     flex-direction: column;
     align-items: center;
-
     width: 100%;
     min-width: 0;
-
     color: var(--gold);
     text-align: center;
-    letter-spacing: 1px;
 }
-
-.reading-position > h3 {
-    margin-bottom: 15px;
-    color: var(--gold-light);
-    font-size: 18px;
-    text-align: center;
-}
-
-#three-reading .reading-position > h3::after {
+.reading-position > h3 { margin: 0 0 16px; color: var(--gold-light); font-size: clamp(1.25rem, 2vw, 1.55rem); }
+.reading-position > h3::after {
     content: "";
     display: block;
-
-    width: 45px;
+    width: 42px;
     height: 1px;
-
-    margin: 8px auto;
-
+    margin: 9px auto 0;
     background: linear-gradient(90deg, transparent, var(--gold), transparent);
 }
-
-.reading-position .tarot-card {
-    width: 100%;
-    max-width: 270px;
-    min-width: 0;
-
-    margin: 0 auto;
-    box-sizing: border-box;
-
-    animation: tarotCardReveal 0.9s ease both;
-    transform-origin: center;
-    backface-visibility: hidden;
-}
-
-.reading-position .tarot-card-image-container {
-    width: 100%;
-    max-width: 100%;
-    overflow: hidden;
-}
-
-.reading-position .tarot-card-image {
-    display: block;
-    width: 100%;
-    max-width: 100%;
-    height: auto;
-
-    aspect-ratio: 2 / 3;
-    object-fit: contain;
-
-    margin: 0 auto;
-}
-
-.reading-position .tarot-card h3,
-.reading-position .tarot-card p,
-.reading-position .tarot-card-header {
-    text-align: center;
-}
-
-.reading-position:nth-child(1) .tarot-card {
-    animation-delay: 0.1s;
-}
-
-.reading-position:nth-child(2) .tarot-card {
-    animation-delay: 0.35s;
-}
-
-.reading-position:nth-child(3) .tarot-card {
-    animation-delay: 0.6s;
-}
-
-@media (hover: hover) {
-    .reading-position .tarot-card:hover {
-        transform: translateY(-5px);
-        filter: brightness(1.04);
-    }
-}
-
-/* Cuarta carta centrada */
-
-.reading-cards:has(.reading-position:nth-child(4):last-child) {
-    display: grid;
-    grid-template-columns: repeat(3, minmax(0, 1fr));
-    gap: 25px;
-}
-
-.reading-cards:has(.reading-position:nth-child(4):last-child)
-.reading-position:nth-child(4) {
-    grid-column: 2;
-}
-
-/* 15. VOLTEO 3D */
-
-.tarot-flip-container {
-    width: 100%;
-    max-width: 280px;
-    perspective: 1200px;
-}
-
-.tarot-flip-card {
-    display: grid;
-    width: 100%;
-
-    transform-style: preserve-3d;
-    transform: rotateY(0deg);
-
-    transition: transform 1.2s cubic-bezier(0.2, 0.75, 0.25, 1);
-}
-
-.tarot-card-back,
-.tarot-card-front {
-    grid-area: 1 / 1;
-    width: 100%;
-
-    backface-visibility: hidden;
-    -webkit-backface-visibility: hidden;
-}
-
-.tarot-card-back {
-    display: flex;
-    align-items: stretch;
-    justify-content: center;
-
-    padding: 12px;
-
-    background:
-        radial-gradient(circle at center, rgba(195, 166, 107, 0.16), transparent 65%),
-        var(--carbon);
-
-    border: 2px solid var(--gold);
-    border-radius: 12px;
-
-    box-shadow:
-        0 0 20px var(--gold-glow),
-        inset 0 0 20px rgba(195, 166, 107, 0.08);
-}
-
-.tarot-card-back-frame {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: space-around;
-
-    width: 100%;
-    min-height: 390px;
-
-    padding: 20px 10px;
-
-    border: 1px solid var(--gold);
-    border-radius: 7px;
-
-    background:
-        repeating-linear-gradient(45deg, transparent, transparent 12px, rgba(195, 166, 107, 0.045) 12px, rgba(195, 166, 107, 0.045) 13px);
-}
-
-.tarot-card-back-frame strong {
-    color: var(--gold-light);
-    font-family: Georgia, serif;
-    font-size: 1rem;
-    letter-spacing: 4px;
-    text-align: center;
-}
-
-.back-symbol {
-    color: var(--gold);
-    font-size: 2.5rem;
-    text-shadow: 0 0 15px var(--gold-glow);
-}
-
-.tarot-card-front {
-    transform: rotateY(180deg);
-}
-
-.tarot-card-front .tarot-card {
-    width: 100%;
-    height: 100%;
-}
-
-.tarot-flip-card.is-revealed {
-    transform: rotateY(180deg);
-}
-
-.tarot-flip-card.is-revealed .tarot-card {
-    animation: brilloRevelacion 1.2s ease;
-}
-
-#three-reading .tarot-flip-container {
-    width: min(100%, 220px);
-    margin: 0 auto;
-}
-
-#three-reading .tarot-flip-card {
-    width: 100%;
-    margin: 0 auto;
-}
-
-#three-reading .tarot-card-front {
-    width: 100%;
-}
-
-#three-reading .tarot-card-front .tarot-card {
-    width: 100%;
-    max-width: none;
-    margin: 0;
-}
-
-#three-reading .reading-position.is-presenting {
-    position: relative;
-    z-index: 1000;
-}
-
-#three-reading .reading-position.is-presenting .tarot-flip-container {
-    position: fixed;
-    top: 50%;
-    left: 50%;
-
-    width: min(75vw, 300px);
-    max-height: 80vh;
-
-    transform: translate(-50%, -50%);
-    z-index: 1001;
-
-    filter: drop-shadow(0 0 35px rgba(195, 166, 107, 0.35));
-
-    transition: transform 0.9s ease, filter 0.9s ease;
-}
-
-#three-reading .reading-position.is-presenting::before {
-    content: "";
-    position: fixed;
-    inset: 0;
-    z-index: 999;
-
-    background: rgba(15, 13, 25, 0.86);
-    backdrop-filter: blur(5px);
-}
-
-#three-reading .reading-position.is-settled .tarot-flip-container {
-    position: relative;
-    top: auto;
-    left: auto;
-
-    transform: none;
-    filter: none;
-
-    transition: all 0.9s ease;
-}
-
-/* 16. BOTONES DE REVELADO */
-
 .tarot-reveal-button {
     display: block;
-
     width: 100%;
-    max-width: 270px;
-
+    max-width: 245px;
     margin: 0 auto;
     padding: 0;
-
-    border: none;
     background: transparent;
-
+    border: 0;
     cursor: pointer;
     perspective: 1000px;
 }
-
-.tarot-reveal-button::before,
-.tarot-reveal-button::after {
-    content: none;
-}
-
-.tarot-reveal-button:hover {
-    background: transparent;
-    border-color: transparent;
-    box-shadow: none;
-    transform: none;
-}
-
-.tarot-reveal-button:hover::before,
-.tarot-reveal-button:hover::after {
-    content: none;
-}
-
 .tarot-reveal-button .tarot-card-back {
     position: relative;
-
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    gap: 22px;
-
+    gap: 20px;
     width: 100%;
     aspect-ratio: 2 / 3;
-
-    overflow: hidden;
-
-    color: var(--gold-light);
-
-    background:
-        radial-gradient(circle, rgba(195, 166, 107, 0.15), transparent 65%),
-        linear-gradient(145deg, #21182f, #100e1c);
-
-    border: 3px solid var(--gold);
-    border-radius: 12px;
-
-    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.35);
-
-    transition:
-        transform 0.4s ease,
-        box-shadow 0.4s ease,
-        border-color 0.4s ease;
-}
-
-.tarot-reveal-button .tarot-card-back::before {
-    content: "";
-    position: absolute;
-    inset: 12px;
-    border: 1px solid rgba(195, 166, 107, 0.65);
-    border-radius: 7px;
-    pointer-events: none;
-}
-
-.tarot-reveal-button .tarot-card-back::after {
-    content: "☾";
-    position: absolute;
-    font-size: 150px;
-    opacity: 0.06;
-}
-
-.tarot-back-symbol {
-    font-size: 65px;
-    line-height: 1;
-}
-
-.tarot-back-title {
-    font-family: Georgia, serif;
-    font-size: 19px;
-    letter-spacing: 3px;
-    text-transform: uppercase;
-}
-
-.tarot-back-decoration {
-    font-size: 25px;
-    letter-spacing: 12px;
-}
-
-.reveal-hint {
-    margin-top: 14px;
-    font-size: 0.9rem;
-    opacity: 0.75;
-}
-
-.tarot-reveal-button:hover .tarot-card-back {
-    transform: translateY(-7px) scale(1.02);
-    border-color: var(--gold-light);
-    box-shadow: 0 15px 35px var(--gold-glow);
-}
-
-.tarot-revealed {
-    width: 100%;
-    max-width: 270px;
-    margin: 0 auto;
-
-    transform-origin: center;
-    animation: revealTarotCard 0.8s ease both;
-}
-
-.tarot-revealed .tarot-card {
-    width: 100%;
-    max-width: 100%;
-}
-
-@keyframes revealTarotCard {
-    0% {
-        opacity: 0;
-        transform: perspective(1000px) rotateY(90deg) scale(0.9);
-    }
-
-    100% {
-        opacity: 1;
-        transform: perspective(1000px) rotateY(0) scale(1);
-    }
-}
-
-.reading-progress {
-    margin: 30px auto;
-    color: var(--gold-light);
-    font-size: 1rem;
-    letter-spacing: 0.5px;
-    text-align: center;
-}
-
-/* 17. CARTAS INVERTIDAS */
-
-.tarot-card.is-reversed .tarot-card-visual {
-    transform: rotate(180deg);
-}
-
-/* 18. INTERPRETACIONES */
-
-#reading-interpretation,
-.reading-interpretation {
-    width: 100%;
-    max-width: 850px;
-
-    margin: 45px auto 0;
-    padding: 25px;
-
-    background: rgba(105, 72, 117, 0.2);
-    border-left: 3px solid var(--gold);
-    border-radius: 4px;
-
-    text-align: center;
-    box-sizing: border-box;
-
-    animation: tarotTextReveal 0.8s ease both;
-    animation-delay: 0.8s;
-}
-
-#reading-interpretation h3,
-.reading-interpretation h3 {
-    margin-bottom: 12px;
-}
-
-.reading-insight,
-.reading-conclusion,
-.reading-question {
-    width: 100%;
-    margin: 22px auto;
     padding: 18px;
-
-    box-sizing: border-box;
-    text-align: center;
+    overflow: hidden;
+    color: var(--gold-light);
+    background: radial-gradient(circle, rgba(195,166,107,.15), transparent 65%), linear-gradient(145deg, #302342, #100e1c);
+    border: 2px solid var(--gold);
+    border-radius: 16px;
+    box-shadow: 0 12px 28px rgba(0,0,0,.3);
+    transition: transform .35s ease, box-shadow .35s ease, border-color .35s ease;
 }
+.tarot-reveal-button .tarot-card-back::before { content: ""; position: absolute; inset: 12px; border: 1px solid rgba(195,166,107,.55); border-radius: 9px; pointer-events: none; }
+.tarot-reveal-button .tarot-card-back::after { content: "☾"; position: absolute; color: var(--gold); font-size: clamp(90px, 12vw, 145px); opacity: .06; }
+.tarot-back-symbol { color: var(--gold-light); font-size: clamp(2.8rem, 5vw, 4rem); line-height: 1; }
+.tarot-back-title { color: var(--gold-light); font-family: 'Cormorant Garamond', Georgia, serif; font-size: 1.15rem; letter-spacing: .18em; text-transform: uppercase; }
+.tarot-back-decoration { color: var(--gold); font-size: 1.1rem; letter-spacing: .5em; }
+.tarot-reveal-button:hover .tarot-card-back { transform: translateY(-5px) rotate(-1deg); border-color: var(--gold-light); box-shadow: 0 18px 36px rgba(0,0,0,.35), 0 0 25px rgba(195,166,107,.18); }
+.reveal-hint { margin-top: 12px; color: var(--muted); font-size: .76rem; }
+.tarot-revealed { width: 100%; max-width: 270px; margin: 0 auto; animation: cardArrival .7s ease both; }
+.reading-progress { margin: 25px auto; color: var(--gold-light); font-size: .9rem; text-align: center; }
+.reading-cards:has(.reading-position:nth-child(4):last-child) { grid-template-columns: repeat(4, minmax(0, 1fr)); }
+.reading-cards:has(.reading-position:nth-child(4):last-child) .reading-position:nth-child(4) { grid-column: auto; }
 
-.reading-insight {
-    animation: tarotTextReveal 0.7s ease both;
-}
-
-.reading-insight:nth-child(2) {
-    animation-delay: 0.2s;
-}
-
-.reading-insight:nth-child(3) {
-    animation-delay: 0.4s;
-}
-
-/* 19. BUSCADOR Y FORMULARIOS */
-
-input,
-select,
-textarea {
-    width: 100%;
-    max-width: 450px;
-
-    margin: 8px 0;
-    padding: 12px 15px;
-
-    color: var(--cream);
-    background: var(--carbon);
-
-    border: 1px solid var(--gold);
-    border-radius: 4px;
-
-    font-family: inherit;
-}
-
-input::placeholder,
-textarea::placeholder {
-    color: var(--muted);
-    opacity: 1;
-}
-
-input:focus,
-select:focus,
-textarea:focus {
-    outline: none;
-    border-color: var(--gold-light);
-    box-shadow: 0 0 12px var(--gold-glow);
-}
-
-select option {
-    color: var(--cream);
-    background: var(--carbon);
-}
-
-.library-controls {
+/* Tarjetas reveladas: imagen + interpretación */
+.tarot-card {
     display: flex;
-    justify-content: center;
+    flex-direction: column;
     width: 100%;
-    margin: 25px auto;
+    max-width: 300px;
+    min-width: 0;
+    overflow: hidden;
+    background: linear-gradient(150deg, rgba(43,34,59,.98), rgba(23,20,37,.98));
+    border: 1px solid var(--border-strong);
+    border-radius: 17px;
+    box-shadow: 0 14px 34px rgba(0,0,0,.28);
+    animation: cardArrival .65s ease both;
 }
+.tarot-card-visual { position: relative; width: 100%; padding: 10px 10px 0; transform-origin: center; transition: transform .4s ease; }
+.tarot-card-image-container { width: 100%; overflow: hidden; border-radius: 10px; background: rgba(0,0,0,.18); }
+.tarot-card-image { display: block; width: 100%; height: auto; aspect-ratio: 2 / 3; object-fit: contain; border-radius: 10px; }
+.tarot-card-image-placeholder { display: grid; place-items: center; width: 100%; aspect-ratio: 2 / 3; color: var(--gold); background: var(--violet-soft); font-size: 4rem; }
+.tarot-card-number { position: absolute; top: 16px; left: 16px; padding: 3px 9px; color: var(--gold-light); background: rgba(16,14,28,.82); border: 1px solid var(--border); border-radius: 20px; font-size: .72rem; }
+.tarot-card-information { display: flex; flex-direction: column; gap: 12px; padding: 18px; text-align: left; }
+.tarot-card-header { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 8px; color: var(--gold); font-size: .68rem; letter-spacing: .07em; text-transform: uppercase; }
+.tarot-card-header span { color: var(--gold); }
+.tarot-card-information h3 { color: var(--white); font-size: 1.65rem; line-height: 1.1; }
+.tarot-card-meaning h4 { margin-bottom: 5px; color: var(--gold-light); font-family: 'Manrope', sans-serif; font-size: .75rem; font-weight: 700; }
+.tarot-card-meaning p { color: var(--muted); font-size: .82rem; line-height: 1.7; overflow-wrap: anywhere; }
+.tarot-card-keywords { display: flex; flex-wrap: wrap; align-items: center; gap: 7px; margin-top: 4px; }
+.tarot-card-keywords span { display: inline-flex; padding: 5px 10px; color: var(--gold-light); background: rgba(195,166,107,.09); border: 1px solid rgba(195,166,107,.22); border-radius: 999px; font-size: .68rem; line-height: 1.4; }
+.tarot-card.is-reversed .tarot-card-visual { transform: rotate(180deg); }
+.reading-position .tarot-card { max-width: 270px; }
+.reading-position .tarot-card-information { text-align: left; }
 
-.library-controls input {
+/* Interpretación final */
+#reading-result, #reading-interpretation, .reading-interpretation {
     width: 100%;
-    max-width: 500px;
-    text-align: center;
+    max-width: 900px;
+    margin: 40px auto 0;
+    text-align: left;
 }
-
-/* 20. BIBLIOTECA */
-
-#tarot-library {
-    display: block;
-    width: 100%;
-    max-width: 1100px;
-
-    margin: 30px auto;
-    text-align: center;
+.reading-card-interpretations, .reading-insight, .reading-conclusion, .reading-question {
+    margin: 16px 0;
+    padding: clamp(18px, 3vw, 26px);
+    background: rgba(255,255,255,.025);
+    border: 1px solid rgba(195,166,107,.2);
+    border-radius: var(--radius-small);
 }
-
-.library-tabs {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    flex-wrap: wrap;
-
-    gap: 12px;
-    margin: 30px auto 15px;
+.reading-card-interpretations h3, .reading-insight h3, .reading-conclusion h3, .reading-question h3 {
+    margin-bottom: 10px;
+    color: var(--gold-light);
+    font-size: 1.55rem;
 }
-
-.library-tabs .category-tab {
-    margin: 0;
-    padding: 12px 20px;
-
+.reading-card-interpretations p, .reading-insight p, .reading-conclusion p, .reading-question p {
     color: var(--muted);
-    background: transparent;
+    font-size: .92rem;
+    line-height: 1.85;
+    text-align: left;
+}
+.reading-disclaimer { margin: 22px auto 0; color: var(--muted); font-size: .78rem; font-style: italic; text-align: center; }
 
+/* Biblioteca */
+.library-controls { width: min(100%, 560px); margin: 0 auto 24px; }
+#search-card {
+    width: 100%;
+    min-height: 52px;
+    padding: 13px 18px;
+    color: var(--white);
+    background: rgba(255,255,255,.055);
     border: 1px solid var(--border);
-    border-radius: 30px;
-
-    font-size: 0.8rem;
-    letter-spacing: 1px;
-
-    transition: 0.3s ease;
+    border-radius: 999px;
+    outline: none;
+    font-size: .9rem;
+    transition: border-color .25s ease, box-shadow .25s ease, background .25s ease;
 }
-
-.library-tabs .category-tab::before,
-.library-tabs .category-tab::after {
-    content: none;
+#search-card::placeholder { color: rgba(184,174,197,.72); }
+#search-card:focus { background: rgba(255,255,255,.075); border-color: var(--gold); box-shadow: 0 0 0 4px rgba(195,166,107,.09); }
+.library-tabs { display: flex; flex-wrap: wrap; justify-content: center; gap: 9px; margin: 0 auto 18px; }
+.category-tab {
+    min-height: 42px;
+    padding: 9px 16px;
+    color: var(--muted);
+    background: rgba(255,255,255,.035);
+    border: 1px solid rgba(195,166,107,.2);
+    border-radius: 999px;
+    font-size: .78rem;
+    font-weight: 700;
+    cursor: pointer;
+    transition: color .25s ease, background .25s ease, border-color .25s ease, transform .25s ease;
 }
-
-.library-tabs .category-tab:hover {
-    color: var(--gold-light);
-    border-color: var(--gold);
-    background: rgba(195, 166, 107, 0.08);
-    transform: translateY(-2px);
-}
-
-.library-tabs .category-tab.active {
-    color: var(--carbon);
-    background: var(--gold);
-    border-color: var(--gold);
-    box-shadow: 0 0 18px var(--gold-glow);
-}
-
-.library-count {
-    margin: 15px 0 25px;
-    color: var(--gold-light);
-    text-align: center;
-    font-family: Georgia, serif;
-    letter-spacing: 1px;
-}
-
-.library-category-section {
-    display: flex;
-    justify-content: center;
-
-    width: 100%;
-    margin: 0 auto;
-}
-
-#tarot-library .library-category-grid {
+.category-tab:hover { color: var(--gold-light); border-color: var(--border-strong); transform: translateY(-1px); }
+.category-tab.active { color: var(--carbon); background: linear-gradient(135deg, var(--gold-light), var(--gold)); border-color: var(--gold-light); }
+.library-count { margin: 18px auto 22px; color: var(--muted); font-size: .8rem; text-align: center; }
+.tarot-library { width: 100%; }
+.library-category-section { width: 100%; }
+.library-category-grid {
     display: grid;
-
-    grid-template-columns: repeat(3, minmax(0, 1fr));
-    justify-items: center;
-    align-items: start;
-
-    gap: 12px;
-
+    grid-template-columns: repeat(6, minmax(0, 1fr));
+    gap: clamp(12px, 2vw, 22px);
     width: 100%;
-    max-width: 850px;
-
-    margin: 0 auto;
 }
-
 .library-card-tab {
     display: flex;
     flex-direction: column;
     align-items: center;
-    justify-content: flex-start;
-
-    gap: 7px;
-
-    width: 100%;
-    max-width: 180px;
     min-width: 0;
-
-    margin: 0 auto;
-    padding: 6px;
-
-    color: var(--cream);
-    background: var(--carbon-light);
-
-    border: 1px solid var(--border);
-    border-radius: 6px;
-
-    cursor: pointer;
-
-    transition: background 0.3s ease, border-color 0.3s ease;
-}
-
-.library-card-tab::before,
-.library-card-tab::after {
-    content: none;
-}
-
-.library-card-tab:hover {
-    border-color: var(--gold);
-    background: var(--terracotta);
-    transform: none;
-    box-shadow: none;
-}
-
-.library-card-tab img,
-.library-card-thumbnail img {
-    display: block;
-
-    width: 100%;
-    max-width: 155px;
-
-    aspect-ratio: 2 / 3;
-    object-fit: contain;
-
-    margin: 0 auto;
-    border-radius: 4px;
-
-    transition: none;
-}
-
-.library-card-thumbnail {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-
-    width: 100%;
-    aspect-ratio: 2 / 3;
-
-    overflow: hidden;
-
-    background: var(--carbon);
-    border: 1px solid var(--gold);
-    border-radius: 4px;
-}
-
-.library-card-placeholder {
-    color: var(--gold);
-    font-size: 2rem;
-}
-
-.library-card-tab-name,
-.library-card-tab span {
-    display: block;
-    width: 100%;
-
-    margin-top: 7px;
-
+    padding: 9px 9px 12px;
     color: var(--gold-light);
-    font-size: 0.75rem;
-    line-height: 1.3;
-
-    text-align: center;
-    overflow-wrap: anywhere;
+    background: rgba(255,255,255,.025);
+    border: 1px solid rgba(195,166,107,.16);
+    border-radius: 15px;
+    cursor: pointer;
+    transition: transform .25s ease, border-color .25s ease, background .25s ease, box-shadow .25s ease;
 }
+.library-card-tab:hover { transform: translateY(-5px); background: rgba(195,166,107,.07); border-color: var(--border-strong); box-shadow: 0 12px 28px rgba(0,0,0,.2); }
+.library-card-tab img { display: block; width: 100%; aspect-ratio: 2 / 3; object-fit: contain; border-radius: 8px; background: rgba(0,0,0,.14); }
+.library-card-tab span { display: block; width: 100%; margin-top: 10px; color: var(--gold-light); font-size: .77rem; font-weight: 600; line-height: 1.35; text-align: center; overflow-wrap: anywhere; }
+.library-empty, .no-results { grid-column: 1 / -1; margin: 28px auto; color: var(--muted); text-align: center; }
 
-#library-count {
-    display: block;
-    margin: 15px auto;
-    text-align: center;
-}
+/* Historial */
+.history-actions { display: flex; justify-content: center; margin: 0 auto 24px; }
+.reading-history { display: grid; gap: 14px; width: 100%; max-width: 1000px; margin: 0 auto; }
+.history-empty { padding: 28px; color: var(--muted); background: rgba(255,255,255,.025); border: 1px dashed var(--border); border-radius: var(--radius-small); text-align: center; }
+.history-entry { overflow: hidden; background: rgba(34,27,49,.7); border: 1px solid var(--border); border-radius: 16px; }
+.history-entry summary { display: flex; align-items: center; justify-content: space-between; gap: 16px; padding: 18px 22px; color: var(--gold-light); cursor: pointer; list-style: none; }
+.history-entry summary::-webkit-details-marker { display: none; }
+.history-entry summary::after { content: "＋"; flex: 0 0 auto; color: var(--gold); font-size: 1.1rem; }
+.history-entry[open] summary::after { content: "−"; }
+.history-entry summary span:first-child { color: var(--gold-light); font-family: 'Cormorant Garamond', Georgia, serif; font-size: 1.35rem; }
+.history-entry summary span:last-child { color: var(--muted); font-size: .75rem; }
+.history-entry-content { padding: 8px 22px 24px; border-top: 1px solid rgba(195,166,107,.12); }
+.history-entry-content .reading-cards { grid-template-columns: repeat(3, minmax(0,1fr)); }
 
-/* 21. MODAL DE LA BIBLIOTECA */
-
+/* Modal de biblioteca */
 .library-modal {
     position: fixed;
     inset: 0;
     z-index: 9999;
-
     display: flex;
-    justify-content: center;
     align-items: center;
-
+    justify-content: center;
     width: 100%;
     height: 100vh;
     height: 100dvh;
-
-    margin: 0;
-    padding: 25px;
-
-    box-sizing: border-box;
-    overflow-x: hidden;
-    overflow-y: auto;
-
-    background: rgba(10, 8, 19, 0.97);
-    backdrop-filter: blur(8px);
-
+    padding: 22px;
+    overflow: auto;
+    background: rgba(9,7,16,.94);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
     opacity: 0;
     visibility: hidden;
     pointer-events: none;
-
     overscroll-behavior: contain;
-    -webkit-overflow-scrolling: touch;
-
-    scrollbar-width: thin;
-    scrollbar-color: var(--gold) var(--carbon);
-
-    transition: opacity 0.3s ease, visibility 0.3s ease;
+    transition: opacity .25s ease, visibility .25s ease;
 }
-
-.library-modal.is-open {
-    opacity: 1;
-    visibility: visible;
-    pointer-events: auto;
-}
-
-.library-modal-content {
-    position: relative;
-
-    width: 100%;
-    max-width: 1200px;
-
-    min-height: 100%;
-    max-height: 100%;
-
-    margin: auto;
-    padding: 35px;
-
-    box-sizing: border-box;
-    overflow-y: auto;
-
-    background:
-        radial-gradient(circle at top right, rgba(60, 82, 108, 0.2), transparent 40%),
-        radial-gradient(circle at bottom left, rgba(105, 72, 117, 0.15), transparent 45%),
-        var(--carbon);
-
-    border: none;
-    border-radius: 12px;
-    box-shadow: none;
-}
-
-.library-modal-body {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-
-    width: 100%;
-    min-height: 100%;
-    max-width: 1450px;
-
-    margin: 0 auto;
-    text-align: center;
-}
-
-.library-modal-card {
+.library-modal.is-open { opacity: 1; visibility: visible; pointer-events: auto; }
+.library-modal-close {
+    position: fixed;
+    top: 18px;
+    right: 22px;
+    z-index: 2;
     display: grid;
-
-    grid-template-columns: minmax(0, 0.9fr) minmax(0, 1.1fr);
-
-    align-items: center;
-    justify-content: center;
-
-    gap: 35px;
-
+    place-items: center;
+    width: 46px;
+    height: 46px;
+    color: var(--gold-light);
+    background: rgba(34,27,49,.9);
+    border: 1px solid var(--border-strong);
+    border-radius: 50%;
+    font-size: 1.8rem;
+    line-height: 1;
+    cursor: pointer;
+    transition: transform .2s ease, background .2s ease;
+}
+.library-modal-close:hover { transform: rotate(90deg); background: rgba(195,166,107,.15); }
+.library-modal-content {
     width: 100%;
-    max-width: 1050px;
-
+    max-width: 1120px;
+    max-height: calc(100dvh - 44px);
     margin: auto;
+    padding: clamp(18px, 3vw, 38px);
+    overflow: auto;
+    background: radial-gradient(circle at top right, rgba(60,82,108,.18), transparent 42%), linear-gradient(145deg, #1b1730, #100e1c);
+    border: 1px solid rgba(195,166,107,.25);
+    border-radius: 22px;
+    box-shadow: var(--shadow);
 }
+.library-modal-body { width: 100%; margin: 0 auto; }
+.library-modal-card { display: grid; grid-template-columns: minmax(240px,.8fr) minmax(0,1.2fr); align-items: start; gap: clamp(22px,4vw,46px); width: 100%; max-width: 1000px; margin: 0 auto; }
+.library-modal-visual { display: flex; justify-content: center; min-width: 0; }
+.library-modal-visual .tarot-card { max-width: 320px; }
+.library-modal-info { display: flex; flex-direction: column; align-items: stretch; gap: 14px; min-width: 0; }
+.library-modal-category { color: var(--gold); font-size: .72rem; font-weight: 700; letter-spacing: .18em; text-align: center; text-transform: uppercase; }
+.library-modal-info h2 { color: var(--white); font-size: clamp(2rem,4vw,3rem); text-align: center; }
+.library-modal-number { color: var(--muted); font-size: .85rem; text-align: center; }
+.library-modal-info section { width: 100%; padding: 17px 19px; background: rgba(255,255,255,.025); border: 1px solid rgba(195,166,107,.17); border-radius: 13px; }
+.library-modal-info section h3 { margin-bottom: 8px; color: var(--gold-light); font-size: 1.35rem; }
+.library-modal-info section p { color: var(--muted); font-size: .88rem; line-height: 1.8; text-align: left; }
+.library-modal-info .tarot-card-keywords { justify-content: flex-start; }
 
-.library-modal-visual {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-
-    width: 100%;
-    min-width: 0;
-}
-
-.library-modal-visual .tarot-card {
-    width: 100%;
-    max-width: 300px;
-
-    margin: 0 auto;
-    box-sizing: border-box;
-}
-
-.library-modal-visual .tarot-card-image-container {
-    width: 100%;
-    max-width: 100%;
-    overflow: hidden;
-}
-
-.library-modal-visual .tarot-card-image {
-    display: block;
-
-    width: 100%;
-    max-width: 100%;
-    height: auto;
-    max-height: 55vh;
-
-    aspect-ratio: 2 / 3;
-    object-fit: contain;
-
-    margin: 0 auto;
-}
-
-.library-modal-info {
+/* Pie */
+.footer {
     display: flex;
     flex-direction: column;
     align-items: center;
-
-    gap: 18px;
-
-    width: 100%;
-    max-width: 650px;
-    max-height: 75vh;
-
-    margin: auto;
-    padding: 5px 10px 5px 0;
-
-    box-sizing: border-box;
-    overflow-y: auto;
-    overflow-wrap: anywhere;
-
+    gap: 8px;
+    padding: 42px 20px 48px;
+    background: rgba(10,9,18,.55);
+    border-top: 1px solid rgba(195,166,107,.18);
     text-align: center;
 }
+.footer p:first-child { color: var(--gold-light); font-family: 'Cormorant Garamond', Georgia, serif; font-size: 1.25rem; letter-spacing: .2em; }
+.footer p:nth-child(2) { color: var(--muted); font-size: .82rem; }
+.footer a { margin-top: 8px; color: var(--gold); font-size: .8rem; }
 
-.library-modal-category {
-    color: var(--gold);
-    font-size: 0.8rem;
-    letter-spacing: 3px;
-    text-transform: uppercase;
+/* Animaciones discretas */
+@keyframes fadeUp { from { opacity: 0; transform: translateY(16px); } to { opacity: 1; transform: translateY(0); } }
+@keyframes cardArrival { from { opacity: 0; transform: translateY(14px) scale(.98); } to { opacity: 1; transform: translateY(0) scale(1); } }
+@keyframes starDrift { from { transform: translateY(0); opacity: .35; } to { transform: translateY(-12px); opacity: .58; } }
+
+/* Tablet */
+@media (max-width: 900px) {
+    .header { flex-direction: column; justify-content: center; gap: 9px; padding: 13px 20px 12px; }
+    .logo { font-size: 1.2rem; }
+    .navigation { justify-content: center; gap: 2px; }
+    .navigation a { padding: 7px 10px; font-size: .76rem; }
+    .reading-options { grid-template-columns: repeat(2, minmax(0,1fr)); }
+    .library-category-grid { grid-template-columns: repeat(4, minmax(0,1fr)); }
+    .reading-cards:has(.reading-position:nth-child(4):last-child) { grid-template-columns: repeat(2, minmax(0,1fr)); }
+    .reading-cards:has(.reading-position:nth-child(4):last-child) .reading-position:nth-child(4) { grid-column: auto; }
 }
 
-.library-modal-info h2 {
-    margin: 8px auto;
-    color: var(--gold-light);
-    font-size: clamp(1.5rem, 4vw, 2.5rem);
-    line-height: 1.2;
-    text-align: center;
+/* Celulares */
+@media (max-width: 600px) {
+    html { scroll-padding-top: 120px; }
+    body { font-size: 15px; }
+    .header { position: sticky; gap: 8px; padding: 10px 12px; }
+    .logo { font-size: 1.05rem; letter-spacing: .12em; }
+    .navigation {
+        display: flex;
+        flex-wrap: nowrap;
+        justify-content: flex-start;
+        width: 100%;
+        max-width: 100%;
+        gap: 5px;
+        padding: 2px 1px 5px;
+        overflow-x: auto;
+        scrollbar-width: none;
+        -webkit-overflow-scrolling: touch;
+    }
+    .navigation::-webkit-scrollbar { display: none; }
+    .navigation a { flex: 0 0 auto; padding: 7px 11px; background: rgba(255,255,255,.035); font-size: .72rem; white-space: nowrap; }
+    .hero { min-height: 590px; min-height: 76svh; padding: 105px 22px 95px; }
+    .hero::before { top: 17%; font-size: 150px; }
+    .hero .subtitle { max-width: 290px; margin-bottom: 18px; font-size: .62rem; letter-spacing: .17em; }
+    .hero h1 { font-size: clamp(2.8rem, 13vw, 4.3rem); line-height: 1.02; }
+    .hero-description { max-width: 340px; margin: 22px auto 28px; font-size: .9rem; line-height: 1.8; }
+    .section, .page-section:not(.hero) { width: calc(100% - 32px); padding: 66px 0; }
+    .section-heading { margin-bottom: 30px; text-align: center; }
+    .section-heading .section-subtitle { font-size: .63rem; letter-spacing: .17em; }
+    .section-heading h2, .reading-active-heading h2 { margin: 7px 0 11px; font-size: clamp(2.25rem, 10vw, 3rem); text-align: center; }
+    .section-heading p, .reading-active-heading p { max-width: 390px; font-size: .86rem; line-height: 1.8; text-align: center; }
+    .card-container { min-height: 120px; margin-bottom: 22px; }
+    .daily-card-container { max-width: 390px; }
+    #daily-card .tarot-card { max-width: 390px; }
+    #daily-card .tarot-card-image { max-height: 390px; }
+    .daily-card-back { width: min(78vw, 275px); }
+    .daily-card-back-symbol { font-size: 3.6rem; }
+    .main-button, .secondary-button { min-height: 45px; padding: 11px 19px; font-size: .8rem; }
+    .reading-options { grid-template-columns: 1fr; gap: 13px; margin: 30px auto; }
+    .reading-card { min-height: 0; padding: 23px 19px; }
+    .reading-card p { max-width: 330px; margin-bottom: 17px; font-size: .84rem; }
+    .reading-active { padding: 20px 12px; border-radius: 18px; }
+    .reading-active-heading { margin-bottom: 24px; }
+    .reading-active-heading .section-subtitle { font-size: .63rem; }
+    .reading-cards { grid-template-columns: repeat(2, minmax(0,1fr)); column-gap: 16px; row-gap: 30px; margin: 25px auto; padding: 0 2px; }
+    .reading-position > h3 { min-height: 2.5em; margin-bottom: 11px; font-size: 1.12rem; line-height: 1.2; }
+    .tarot-reveal-button { max-width: 100%; }
+    .tarot-reveal-button .tarot-card-back { gap: 14px; border-radius: 12px; }
+    .tarot-back-symbol { font-size: 2.8rem; }
+    .tarot-back-title { font-size: .78rem; letter-spacing: .12em; }
+    .tarot-back-decoration { font-size: .8rem; letter-spacing: .3em; }
+    .reveal-hint { margin-top: 8px; font-size: .68rem; }
+    .tarot-revealed { max-width: 100%; }
+    .tarot-card { border-radius: 13px; }
+    .tarot-card-visual { padding: 6px 6px 0; }
+    .tarot-card-image-container, .tarot-card-image { border-radius: 8px; }
+    .tarot-card-number { top: 10px; left: 10px; padding: 2px 6px; font-size: .62rem; }
+    .tarot-card-information { gap: 8px; padding: 10px; }
+    .tarot-card-header { gap: 4px; font-size: .55rem; letter-spacing: .02em; }
+    .tarot-card-information h3 { font-size: 1.18rem; line-height: 1.05; }
+    .tarot-card-meaning h4 { font-size: .66rem; }
+    .tarot-card-meaning p { font-size: .7rem; line-height: 1.55; }
+    .tarot-card-keywords { gap: 4px; }
+    .tarot-card-keywords span { padding: 4px 7px; font-size: .57rem; }
+    .reading-position .tarot-card { max-width: 100%; }
+    .reading-progress { margin: 20px auto; font-size: .8rem; }
+    #reading-result, #reading-interpretation, .reading-interpretation { margin-top: 28px; }
+    .reading-card-interpretations, .reading-insight, .reading-conclusion, .reading-question { margin: 12px 0; padding: 16px; }
+    .reading-card-interpretations h3, .reading-insight h3, .reading-conclusion h3, .reading-question h3 { font-size: 1.35rem; text-align: center; }
+    .reading-card-interpretations p, .reading-insight p, .reading-conclusion p, .reading-question p { font-size: .82rem; line-height: 1.75; text-align: left; }
+    .reading-disclaimer { font-size: .72rem; line-height: 1.6; }
+    .library-controls { margin-bottom: 18px; }
+    #search-card { min-height: 48px; font-size: .84rem; }
+    .library-tabs { flex-wrap: nowrap; justify-content: flex-start; gap: 7px; padding: 2px 1px 8px; overflow-x: auto; scrollbar-width: none; }
+    .library-tabs::-webkit-scrollbar { display: none; }
+    .category-tab { flex: 0 0 auto; min-height: 39px; padding: 8px 12px; font-size: .7rem; white-space: nowrap; }
+    .library-count { margin: 12px auto 18px; }
+    .library-category-grid { grid-template-columns: repeat(3, minmax(0,1fr)); gap: 10px; }
+    .library-card-tab { padding: 6px 6px 9px; border-radius: 11px; }
+    .library-card-tab img { border-radius: 6px; }
+    .library-card-tab span { margin-top: 7px; font-size: .68rem; line-height: 1.25; }
+    .history-entry summary { align-items: flex-start; padding: 15px; }
+    .history-entry summary span:first-child { font-size: 1.2rem; text-align: left; }
+    .history-entry summary span:last-child { max-width: 115px; font-size: .65rem; text-align: right; }
+    .history-entry-content { padding: 8px 12px 18px; }
+    .history-entry-content .reading-cards { grid-template-columns: repeat(2, minmax(0,1fr)); }
+    .history-entry-content .reading-position > h3 { font-size: 1rem; }
+    .library-modal { align-items: flex-start; padding: 12px; }
+    .library-modal-close { top: 17px; right: 17px; width: 40px; height: 40px; }
+    .library-modal-content { max-height: calc(100dvh - 24px); padding: 60px 14px 18px; border-radius: 17px; }
+    .library-modal-card { grid-template-columns: 1fr; gap: 20px; }
+    .library-modal-visual .tarot-card { width: min(72vw, 245px); }
+    .library-modal-info { gap: 10px; }
+    .library-modal-info section { padding: 14px; }
+    .library-modal-info section h3 { font-size: 1.2rem; text-align: center; }
+    .library-modal-info section p { font-size: .82rem; }
+    .library-modal-info .tarot-card-keywords { justify-content: center; }
+    .constellation { width: 58px; opacity: .16; }
+    .footer { padding: 34px 18px 40px; }
 }
 
-.library-modal-number {
-    color: var(--muted);
-    font-size: 0.9rem;
-    text-align: center;
+@media (max-width: 380px) {
+    .section, .page-section:not(.hero) { width: calc(100% - 26px); }
+    .reading-cards { column-gap: 11px; row-gap: 24px; padding: 0; }
+    .tarot-card-information { padding: 8px; }
+    .tarot-card-information h3 { font-size: 1.05rem; }
+    .tarot-card-meaning p { font-size: .66rem; }
+    .tarot-card-keywords span { font-size: .53rem; }
+    .library-category-grid { gap: 7px; }
+    .library-card-tab span { font-size: .62rem; }
 }
 
-.library-modal-info section {
-    width: 100%;
-    max-width: 700px;
-
-    margin: 14px auto 0;
-    padding: 20px;
-
-    background: rgba(255, 255, 255, 0.025);
-
-    border: 1px solid var(--border);
-    border-radius: 8px;
-
-    box-shadow: none;
-    animation: none;
-
-    transition: background 0.3s ease, border-color 0.3s ease;
+@media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after { scroll-behavior: auto !important; animation-duration: .01ms !important; animation-iteration-count: 1 !important; transition-duration: .01ms !important; }
 }
 
-.library-modal-info section:hover {
-    background: rgba(195, 166, 107, 0.06);
-    border-color: var(--gold);
-}
+/* ==========================================
+   BIBLIOTECA: ARCANOS MAYORES Y MENORES
+========================================== */
 
-.library-modal-info section h3 {
-    margin-bottom: 10px;
-    color: var(--gold-light);
-    font-size: 1.1rem;
-    text-align: center;
-}
-
-.library-modal-info section h3::after {
-    content: "✦";
-    display: block;
-    margin-top: 8px;
-    color: var(--gold);
-    font-size: 0.85rem;
-}
-
-.library-modal-info section p {
-    margin: 0;
-    color: var(--cream);
-    font-size: 0.9rem;
-    line-height: 1.7;
-    text-align: center;
-}
-
-.library-modal-info .tarot-card-keywords {
+.library-minor-tabs {
     display: flex;
-    justify-content: center;
-    align-items: center;
     flex-wrap: wrap;
-    gap: 9px;
-}
-
-.library-modal-info .tarot-card-keywords span {
-    padding: 7px 12px;
-
-    color: var(--gold-light);
-    background: var(--terracotta);
-
-    border: 1px solid var(--border);
-    border-radius: 20px;
-
-    font-size: 0.8rem;
-}
-
-/* Botón cerrar */
-
-.library-modal-close {
-    position: fixed;
-    top: 20px;
-    right: 25px;
-    z-index: 10001;
-
-    display: flex;
-    align-items: center;
     justify-content: center;
+    align-items: center;
+    gap: 10px;
+    margin: 8px auto 28px;
+    padding: 14px;
+    border: 1px solid var(--border);
+    border-radius: 18px;
+    background: rgba(255, 255, 255, 0.025);
+}
 
-    width: 46px;
-    height: 46px;
-    min-width: 46px;
-
-    margin: 0;
-    padding: 0;
-
-    color: var(--gold-light);
-    background: var(--carbon-light);
-
-    border: 1px solid var(--gold);
-    border-radius: 50%;
-
-    font-family: Arial, sans-serif;
-    font-size: 1.9rem;
-    line-height: 1;
-
+.library-minor-tab {
+    min-width: 112px;
+    padding: 10px 17px;
+    border: 1px solid var(--border);
+    border-radius: 999px;
+    color: var(--cream);
+    background: rgba(255, 255, 255, 0.035);
+    font: inherit;
+    font-size: .82rem;
     cursor: pointer;
-
-    box-shadow: 0 5px 20px rgba(0, 0, 0, 0.5);
-
-    transition: all 0.3s ease;
+    transition: color .25s ease, background .25s ease, border-color .25s ease, transform .25s ease;
 }
 
-.library-modal-close::before,
-.library-modal-close::after {
-    content: none;
+.library-minor-tab:hover {
+    border-color: var(--gold);
+    color: var(--gold-light);
+    transform: translateY(-2px);
 }
 
-.library-modal-close:hover {
-    color: var(--white);
-    background: var(--red);
-    border-color: var(--red-light);
-    transform: rotate(90deg);
+.library-minor-tab.active {
+    color: var(--carbon);
+    border-color: var(--gold);
+    background: linear-gradient(135deg, var(--gold-light), var(--gold));
+    box-shadow: 0 5px 18px rgba(205, 168, 93, .16);
 }
-
-.library-modal.is-open .library-modal-card {
-    animation: fichaAparecer 0.5s ease both;
-}
-
-/* Scrollbar del modal */
-
-.library-modal::-webkit-scrollbar {
-    width: 10px;
-}
-
-.library-modal::-webkit-scrollbar-track {
-    background: var(--carbon);
-}
-
-.library-modal::-webkit-scrollbar-thumb {
-    background: linear-gradient(180deg, var(--gold-light), var(--gold), var(--red));
-
-    border: 2px solid var(--carbon);
-    border-radius: 20px;
-}
-
-.library-modal::-webkit-scrollbar-thumb:hover {
-    background: var(--gold-light);
-}
-
-/* 22. HISTORIAL */
-
-#history li,
-#reading-history li {
-    padding: 13px;
-    margin: 8px 0;
-
-    background: rgba(60, 82, 108, 0.22);
-
-    border-left: 3px solid var(--gold);
-    border-radius: 3px;
-}
-
-.reading-history {
-    max-width: 1000px;
-    margin: 30px auto;
-}
-
-.history-entry-content .reading-cards {
-    max-width: 950px;
-}
-
-.history-entry-content .reading-position .tarot-card {
-    max-width: 240px;
-}
-
-/* 23. PIE DE PÁGINA */
-
-footer,
-.footer {
-    padding: 40px 20px;
-    margin-top: 60px;
-
-    text-align: center;
-
-    background: var(--carbon);
-    border-top: 1px solid var(--border);
-}
-
-footer::before {
-    content: "☽  ✧  ☾";
-    display: block;
-
-    margin-bottom: 10px;
-
-    color: var(--gold);
-    font-size: 1.7rem;
-}
-
-footer p {
-    color: var(--muted);
-}
-
-/* 24. ANIMACIONES */
-
-@keyframes aparecer {
-    from {
-        opacity: 0;
-        transform: translateY(25px);
-    }
-
-    to {
-        opacity: 1;
-        transform: translateY(0);
-    }
-}
-
-@keyframes ambienteMagico {
-    from {
-        opacity: 0.45;
-        transform: scale(1);
-    }
-
-    to {
-        opacity: 1;
-        transform: scale(1.08);
-    }
-}
-
-@keyframes brilloRevelacion {
-    0% {
-        filter: brightness(1);
-    }
-
-    45% {
-        filter: brightness(1.4);
-    }
-
-    100% {
-        filter: brightness(1);
-    }
-}
-
-@keyframes fichaAparecer {
-    from {
-        opacity: 0;
-        transform: translateY(25px);
-    }
-
-    to {
-        opacity: 1;
-        transform: translateY(0);
-    }
-}
-
-@keyframes tarotCardReveal {
-    0% {
-        opacity: 0;
-        transform: translateY(35px) rotateY(25deg) scale(0.88);
-    }
-
-    60% {
-        opacity: 1;
-        transform: translateY(-5px) rotateY(-5deg) scale(1.02);
-    }
-
-    100% {
-        opacity: 1;
-        transform: translateY(0) rotateY(0) scale(1);
-    }
-}
-
-@keyframes tarotTextReveal {
-    from {
-        opacity: 0;
-        transform: translateY(20px);
-    }
-
-    to {
-        opacity: 1;
-        transform: translateY(0);
-    }
-}
-
-/* 25. TABLETS GRANDES */
-
-@media (max-width: 850px) {
-    section {
-        margin: 30px 15px;
-    }
-
-    .library-modal-card {
-        grid-template-columns: 1fr;
-        gap: 30px;
-    }
-
-    .library-modal-visual .tarot-card {
-        max-width: 280px;
-    }
-
-    .library-modal-info {
-        max-width: 650px;
-    }
-
-    .page-section {
-        padding: 75px 18px;
-    }
-}
-
-/* 26. CARTA DEL DÍA - TABLETS */
-
-@media (max-width: 800px) {
-    #daily-card .tarot-card.tarot-card-horizontal {
-        grid-template-columns: minmax(200px, 260px) minmax(0, 1fr);
-        gap: 25px;
-
-        min-height: 0;
-        padding: 25px;
-    }
-
-    #daily-card .tarot-card-image {
-        max-height: 390px;
-    }
-
-    #daily-card .tarot-card-information h3 {
-        font-size: 1.7rem;
-    }
-}
-
-/* 27. TABLETS Y CELULARES */
-
-@media (max-width: 768px) {
-    header {
-        padding: 35px 15px;
-    }
-
-    header h1 {
-        letter-spacing: 3px;
-    }
-
-    nav {
-        gap: 4px;
-    }
-
-    nav a {
-        padding: 8px 10px;
-        font-size: 0.78rem;
-    }
-
-    .hero {
-        min-height: 65vh;
-        margin: 30px 15px;
-        padding: 55px 20px;
-    }
-
-    section {
-        margin: 25px 12px;
-        padding: 25px 15px;
-    }
-
-    #three-reading .reading-cards {
-        gap: 10px;
-    }
-
-    #three-reading .tarot-flip-container {
-        width: min(100%, 200px);
-    }
-
-    #three-reading .reading-position.is-presenting .tarot-flip-container {
-        width: min(75vw, 280px);
-    }
-
-    .tarot-card-back-frame {
-        min-height: 350px;
-    }
-
-    .library-tabs {
-        gap: 8px;
-    }
-
-    .library-tabs .category-tab {
-        padding: 10px 13px;
-        font-size: 0.72rem;
-    }
-
-    .library-modal-content {
-        padding: 75px 18px 35px;
-    }
-
-    .library-modal-close {
-        top: 13px;
-        right: 14px;
-        width: 42px;
-        height: 42px;
-        min-width: 42px;
-    }
-}
-
-/* 28. CELULARES */
 
 @media (max-width: 600px) {
-    .reading-cards {
-        grid-template-columns: repeat(2, minmax(0, 1fr));
-        gap: 15px 10px;
-    }
-
-    .reading-position .tarot-card {
-        max-width: 100%;
-    }
-
-    .reading-position h3 {
-        font-size: 15px;
-    }
-
-    .reading-interpretation {
-        margin-top: 30px;
-    }
-
-    .reading-insight,
-    .reading-conclusion,
-    .reading-question {
-        padding: 12px;
-    }
-
-    .tarot-reveal-button,
-    .tarot-revealed {
-        max-width: 220px;
-    }
-
-    .tarot-back-symbol {
-        font-size: 48px;
-    }
-
-    .tarot-back-title {
-        font-size: 15px;
-    }
-
-    .tarot-back-decoration {
-        font-size: 20px;
-    }
-
-    .reading-progress {
-        font-size: 0.9rem;
-    }
-
-    .library-modal {
-        padding: 12px;
-        align-items: flex-start;
-    }
-
-    .library-modal-content {
-        max-height: 94vh;
-        padding: 55px 15px 20px;
-        border-radius: 10px;
-    }
-
-    .library-modal-card {
-        grid-template-columns: minmax(0, 1fr);
-        gap: 18px;
-    }
-
-    .library-modal-visual .tarot-card {
-        max-width: 230px;
-    }
-
-    .library-modal-visual .tarot-card-image {
-        max-height: 42vh;
-    }
-
-    .library-modal-info {
-        max-height: none;
-        overflow: visible;
-        padding-right: 0;
-        gap: 14px;
-    }
-
-    .library-modal-info h2 {
-        font-size: 21px;
-    }
-
-    .library-modal-info h3 {
-        font-size: 14px;
-    }
-
-    .library-modal-info p {
-        font-size: 13px;
-    }
-
-    .library-modal-info section {
-        padding: 15px;
-    }
-
-    .library-modal-close {
-        top: 10px;
-        right: 15px;
-    }
-
-    #tarot-library .library-category-grid {
-        gap: 8px;
-    }
-
-    #tarot-library .library-card-tab {
-        max-width: 155px;
-        padding: 4px;
-    }
-
-    #tarot-library .library-card-tab img {
-        max-width: 100%;
-    }
-
-    .library-card-tab-name,
-    .library-card-tab span {
-        font-size: 0.68rem;
-    }
-
-    .library-tabs {
+    .library-minor-tabs {
         display: grid;
         grid-template-columns: repeat(2, minmax(0, 1fr));
         gap: 8px;
+        padding: 11px;
+        margin-bottom: 20px;
     }
 
-    .library-tabs .category-tab {
-        width: 100%;
-        padding: 10px 5px;
-        font-size: 0.68rem;
-    }
-
-    .reading-options {
-        grid-template-columns: 1fr;
-    }
-
-    .page-section {
-        min-height: auto;
-        padding: 65px 16px;
-    }
-
-    .hero h2 {
-        font-size: 1.8rem;
-    }
-
-    button,
-    .btn {
-        padding: 12px 20px;
-        font-size: 0.8rem;
-        letter-spacing: 1px;
-    }
-
-    /* Cuarta carta centrada en celular */
-
-    .reading-cards:has(.reading-position:nth-child(4):last-child) {
-        grid-template-columns: repeat(2, minmax(0, 1fr));
-        gap: 15px;
-    }
-
-    .reading-cards:has(.reading-position:nth-child(4):last-child)
-    .reading-position:nth-child(4) {
-        grid-column: 1 / -1;
-        width: 50%;
-        justify-self: center;
-    }
-}
-
-/* 29. CARTA DEL DÍA - CELULARES */
-
-@media (max-width: 550px) {
-    #daily-card {
-        margin: 25px auto;
-    }
-
-    #daily-card .daily-card-back {
-        width: 220px;
-        height: 330px;
-    }
-
-    #daily-card .tarot-card.tarot-card-horizontal {
-        grid-template-columns: minmax(110px, 135px) minmax(0, 1fr);
-        align-items: start;
-
-        gap: 15px;
-        padding: 15px;
-    }
-
-    #daily-card .tarot-card-image-container {
-        max-width: 135px;
-    }
-
-    #daily-card .tarot-card-image {
-        max-height: 260px;
-    }
-
-    #daily-card .tarot-card-information h3 {
-        margin: 8px 0 13px;
-        font-size: 1.25rem;
-    }
-
-    #daily-card .tarot-card-information .tarot-card-header {
-        gap: 5px;
-        font-size: 0.62rem;
-        letter-spacing: 0.5px;
-    }
-
-    #daily-card .tarot-card-meaning h4 {
-        font-size: 0.9rem;
-    }
-
-    #daily-card .tarot-card-meaning p {
-        font-size: 0.8rem;
-        line-height: 1.65;
-    }
-
-    #daily-card .tarot-card-information .tarot-card-keywords {
-        gap: 5px;
-        margin-top: 13px;
-    }
-
-    #daily-card .tarot-card-information .tarot-card-keywords span {
-        padding: 4px 7px;
-        font-size: 0.62rem;
-    }
-}
-
-/* 30. PANTALLAS MUY PEQUEÑAS */
-
-@media (max-width: 360px) {
-    #three-reading .reading-cards {
-        grid-template-columns: minmax(0, 1fr);
-        gap: 22px;
-    }
-
-    #three-reading .reading-position .tarot-card {
-        max-width: 240px;
-    }
-
-    #tarot-library .library-category-grid {
-        gap: 6px;
-    }
-}
-
-/* 31. ACCESIBILIDAD */
-
-@media (prefers-reduced-motion: reduce) {
-    *,
-    *::before,
-    *::after {
-        animation-duration: 0.01ms !important;
-        animation-iteration-count: 1 !important;
-        transition-duration: 0.01ms !important;
-        scroll-behavior: auto !important;
-    }
-}
-/* ==========================================
-   CONSTELACIONES LATERALES
-========================================== */
-
-.constellation {
-    position: fixed;
-    top: 10%;
-    width: 150px;
-    height: 80vh;
-    z-index: 0;
-    pointer-events: none;
-    opacity: 0.48;
-    animation: constellationGlow 6s ease-in-out infinite alternate;
-}
-
-.constellation-left {
-    left: 0;
-}
-
-.constellation-right {
-    right: 0;
-}
-
-.constellation svg {
-    width: 100%;
-    height: 100%;
-    overflow: visible;
-}
-
-.constellation path {
-    fill: none;
-    stroke: var(--gold);
-    stroke-width: 1;
-    stroke-opacity: 0.65;
-}
-
-.constellation circle {
-    fill: var(--gold-light);
-    filter: drop-shadow(0 0 5px var(--gold));
-}
-
-@keyframes constellationGlow {
-    from {
-        opacity: 0.25;
-    }
-
-    to {
-        opacity: 0.65;
-    }
-}
-
-/* Adaptación para pantallas pequeñas */
-@media (max-width: 900px) {
-    .constellation {
-        width: 90px;
-        opacity: 0.25;
-    }
-}
-
-@media (max-width: 600px) {
-    .constellation {
-        width: 45px;
-        opacity: 0.18;
-    }
-}
-
-/* ==========================================
-   AJUSTES MÓVILES - ESPACIADO DE TIRADAS
-========================================== */
-
-@media (max-width: 600px) {
-
-    /* Separación entre las cartas */
-    .reading-cards {
-        column-gap: 20px;
-        row-gap: 30px;
-        padding: 15px 8px 25px;
-    }
-
-    /* Evita que las posiciones se compriman */
-    .reading-position {
+    .library-minor-tab {
         min-width: 0;
-        padding: 5px;
+        width: 100%;
+        padding: 11px 8px;
+        font-size: .76rem;
     }
-
-    /* Evita desbordamientos */
-    .tarot-flip-container {
-        max-width: 100%;
-    }
-
 }
-
-/* Celulares pequeños */
-@media (max-width: 380px) {
-
-    .reading-cards {
-        column-gap: 14px;
-        row-gap: 25px;
-        padding-left: 4px;
-        padding-right: 4px;
-    }
-
-}
-
-/* ==========================================
-   TIPOGRAFÍA RESPONSIVE PARA CELULARES
-   TAROT ARCANO
-========================================== */
-
-@media (max-width: 600px) {
-
-    /* Texto general */
-    body {
-        font-size: 15px;
-        line-height: 1.65;
-    }
-
-    /* Títulos principales */
-    h1 {
-        font-size: clamp(1.8rem, 8vw, 2.5rem);
-        line-height: 1.15;
-    }
-
-    h2 {
-        font-size: clamp(1.4rem, 6vw, 1.9rem);
-        line-height: 1.25;
-    }
-
-    h3 {
-        font-size: 1.15rem;
-        line-height: 1.35;
-    }
-
-    /* Párrafos y descripciones */
-    p {
-        font-size: 0.95rem;
-        line-height: 1.7;
-        overflow-wrap: break-word;
-    }
-
-    /* Textos de las tiradas */
-    .reading-position {
-        font-size: 0.9rem;
-        line-height: 1.4;
-    }
-
-    .reading-position h3 {
-        font-size: 0.95rem;
-        margin-bottom: 8px;
-    }
-
-    /* Información de las cartas */
-    .tarot-card-information {
-        padding: 12px;
-    }
-
-    .tarot-card-information h3 {
-        font-size: 1.15rem;
-        line-height: 1.3;
-    }
-
-    .tarot-card-meaning {
-        font-size: 0.9rem;
-        line-height: 1.65;
-    }
-
-    /* Interpretación de las tiradas */
-    #reading-interpretation {
-        font-size: 0.95rem;
-        line-height: 1.7;
-    }
-
-    .reading-insight,
-    .reading-conclusion,
-    .reading-question {
-        font-size: 0.93rem;
-        line-height: 1.7;
-    }
-
-    /* Nombres y palabras clave */
-    .tarot-card-keywords {
-        font-size: 0.82rem;
-        line-height: 1.5;
-    }
-
-    /* Botones */
-    button {
-        font-size: 0.9rem;
-        line-height: 1.4;
-    }
-
-    /* Biblioteca */
-    .library-card-tab {
-        font-size: 0.85rem;
-    }
-
-    /* Ventana de información de las cartas */
-    .library-modal-info {
-        font-size: 0.93rem;
-        line-height: 1.65;
-    }
-
-    .library-modal-info h3 {
-        font-size: 1.25rem;
-    }
-
-    /* Historial */
-    #reading-history,
-    .reading-history {
-        font-size: 0.9rem;
-        line-height: 1.6;
-    }
-
-    /* Campos de búsqueda */
-    input,
-    select,
-    textarea {
-        font-size: 16px;
-        line-height: 1.5;
-    }
-
-}
-
-/* ==========================================
-   CELULARES PEQUEÑOS
-========================================== */
-
-@media (max-width: 380px) {
-
-    body {
-        font-size: 14px;
-    }
-
-    p {
-        font-size: 0.9rem;
-    }
-
-    .tarot-card-information h3 {
-        font-size: 1.05rem;
-    }
-
-    .tarot-card-meaning {
-        font-size: 0.85rem;
-    }
-
-    .reading-insight,
-    .reading-conclusion,
-    .reading-question {
-        font-size: 0.88rem;
-    }
-
-}
-
-/* ==========================================
-   ALINEACIÓN CENTRADA EN CELULARES
-   TAROT ARCANO
-========================================== */
-
-@media (max-width: 600px) {
-
-    /* Títulos y subtítulos */
-    h1,
-    h2,
-    h3,
-    section h2,
-    section h3 {
-        text-align: center;
-    }
-
-    /* Textos generales */
-    p {
-        text-align: center;
-    }
-
-    /* Encabezado y presentación */
-    header,
-    .hero {
-        text-align: center;
-    }
-
-    /* Secciones principales */
-    section {
-        text-align: center;
-    }
-
-    /* Opciones de tiradas */
-    .reading-options {
-        text-align: center;
-        justify-content: center;
-    }
-
-    .reading-card {
-        text-align: center;
-    }
-
-    /* Interpretaciones */
-    #reading-interpretation,
-    .reading-insight,
-    .reading-conclusion,
-    .reading-question {
-        text-align: center;
-    }
-
-    /* Carta del día */
-    .tarot-card-information {
-        text-align: center;
-    }
-
-    /* Biblioteca */
-    .library-controls {
-        text-align: center;
-    }
-
-    /* Historial */
-    #reading-history,
-    .reading-history {
-        text-align: center;
-    }
-
-}
-
-
-
-
-
-
 
