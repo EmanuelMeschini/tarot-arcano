@@ -1393,130 +1393,89 @@ function mostrarBiblioteca() {
 
     if (!tarotLibrary || !cartas.length) return;
 
-
     const busqueda = buscadorCartas?.value
         .toLowerCase()
         .trim() || "";
 
-
     const categoriaActiva =
         tarotLibrary.dataset.categoriaActiva || "Arcanos Mayores";
 
+    const paloActivo = tarotLibrary.dataset.paloActivo || "Todos";
+    const esMenores = categoriaActiva === "Arcanos Menores";
 
-    const botonesCategoria = document.querySelectorAll(
-        ".category-tab"
-    );
-
-
-    botonesCategoria.forEach(boton => {
-
+    // Actualizar las dos categorías principales.
+    document.querySelectorAll(".category-tab").forEach(boton => {
         const activa =
-            boton.dataset.category === categoriaActiva ||
-            (
-                boton.dataset.category === "mayores" &&
-                categoriaActiva === "Arcanos Mayores"
-            );
-
+            (boton.dataset.category === "mayores" && !esMenores) ||
+            (boton.dataset.category === "menores" && esMenores);
 
         boton.classList.toggle("active", activa);
-
-        boton.setAttribute(
-            "aria-selected",
-            String(activa)
-        );
-
+        boton.setAttribute("aria-selected", String(activa));
     });
 
+    const palos = ["Copas", "Bastos", "Oros", "Espadas"];
 
     const cartasFiltradas = cartas.filter(carta => {
-
-        const coincideCategoria =
-            carta.categoria === categoriaActiva;
-
+        const coincideCategoria = esMenores
+            ? palos.includes(carta.categoria) &&
+              (paloActivo === "Todos" || carta.categoria === paloActivo)
+            : carta.categoria === "Arcanos Mayores";
 
         const textoCarta = [
-
             carta.nombre || "",
-
             carta.simbolismo || "",
-
             ...(Array.isArray(carta.palabrasClave)
                 ? carta.palabrasClave
                 : [])
-
         ].join(" ").toLowerCase();
 
-
-        const coincideBusqueda =
-            textoCarta.includes(busqueda);
-
-
-        return coincideCategoria && coincideBusqueda;
-
+        return coincideCategoria && textoCarta.includes(busqueda);
     });
 
-
     const contador = document.getElementById("library-count");
-
-
     if (contador) {
-
-        contador.textContent =
-            `${cartasFiltradas.length} cartas`;
-
+        contador.textContent = `${cartasFiltradas.length} cartas`;
     }
 
+    const filtrosMenores = esMenores ? `
+        <div class="library-minor-tabs" role="group" aria-label="Filtrar arcanos menores">
+            <button type="button" class="library-minor-tab ${paloActivo === "Todos" ? "active" : ""}" data-suit="Todos">Todos</button>
+            <button type="button" class="library-minor-tab ${paloActivo === "Copas" ? "active" : ""}" data-suit="Copas">♡ Copas</button>
+            <button type="button" class="library-minor-tab ${paloActivo === "Bastos" ? "active" : ""}" data-suit="Bastos">✧ Bastos</button>
+            <button type="button" class="library-minor-tab ${paloActivo === "Oros" ? "active" : ""}" data-suit="Oros">◈ Oros</button>
+            <button type="button" class="library-minor-tab ${paloActivo === "Espadas" ? "active" : ""}" data-suit="Espadas">⚔ Espadas</button>
+        </div>
+    ` : "";
 
-    if (!cartasFiltradas.length) {
-
-        tarotLibrary.innerHTML = `
-
-            <p class="library-empty">
-                No se encontraron cartas en esta categoría.
-            </p>
-
-        `;
-
-        return;
-
-    }
-
-
-    tarotLibrary.innerHTML = `
-
-        <section class="library-category-section">
-
-            <div class="library-category-grid">
-
-                ${cartasFiltradas.map(carta => `
-
-                    <button
-                        type="button"
-                        class="library-card-tab"
-                        data-id="${carta.id}"
-                        aria-label="Ver ${carta.nombre}"
+    const contenidoCartas = cartasFiltradas.length ? `
+        <div class="library-category-grid">
+            ${cartasFiltradas.map(carta => `
+                <button
+                    type="button"
+                    class="library-card-tab"
+                    data-id="${carta.id}"
+                    aria-label="Ver ${carta.nombre}"
+                >
+                    <img
+                        src="${carta.imagen || ""}"
+                        alt="${carta.nombre}"
+                        loading="lazy"
                     >
-
-                        <img
-                            src="${carta.imagen || ""}"
-                            alt="${carta.nombre}"
-                            loading="lazy"
-                        >
-
-                        <span>${carta.nombre}</span>
-
-                    </button>
-
-                `).join("")}
-
-            </div>
-
-        </section>
-
+                    <span>${carta.nombre}</span>
+                </button>
+            `).join("")}
+        </div>
+    ` : `
+        <p class="library-empty">No se encontraron cartas en esta categoría.</p>
     `;
 
+    tarotLibrary.innerHTML = `
+        <section class="library-category-section">
+            ${filtrosMenores}
+            ${contenidoCartas}
+        </section>
+    `;
 }
-
 
 // ==========================================
 // EVENTOS DE LA BIBLIOTECA
@@ -1524,38 +1483,24 @@ function mostrarBiblioteca() {
 
 // Buscador
 if (buscadorCartas) {
-
     buscadorCartas.addEventListener("input", () => {
-
         mostrarBiblioteca();
-
     });
-
 }
 
-
-// Pestañas de categorías
+// Categorías principales: Arcanos Mayores / Arcanos Menores
 document.querySelectorAll(".category-tab").forEach(boton => {
-
     boton.addEventListener("click", () => {
-
-        const categoria = boton.dataset.category;
-
         if (!tarotLibrary) return;
 
         tarotLibrary.dataset.categoriaActiva =
-
-            categoria === "mayores"
-
+            boton.dataset.category === "mayores"
                 ? "Arcanos Mayores"
+                : "Arcanos Menores";
 
-                : categoria;
-
-
+        tarotLibrary.dataset.paloActivo = "Todos";
         mostrarBiblioteca();
-
     });
-
 });
 
 
@@ -1564,6 +1509,15 @@ document.querySelectorAll(".category-tab").forEach(boton => {
 // ==========================================
 
 document.addEventListener("click", event => {
+
+    // Filtros de los cuatro palos de los Arcanos Menores.
+    const botonPalo = event.target.closest(".library-minor-tab");
+
+    if (botonPalo && tarotLibrary?.contains(botonPalo)) {
+        tarotLibrary.dataset.paloActivo = botonPalo.dataset.suit;
+        mostrarBiblioteca();
+        return;
+    }
 
     // Botones de categorías adicionales
     const botonCategoria = event.target.closest(
