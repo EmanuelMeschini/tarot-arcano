@@ -843,61 +843,57 @@ main { width: 100%; }
 }
 
 
+
 /* ==========================================
-   LOGO TAROT ARCANO
+   LOGO TAROT ARCANO - TAMAÑO RESPONSIVE
 ========================================== */
 
 .header .logo {
     display: flex;
     align-items: center;
-    gap: 12px;
+    gap: 8px;
+    flex-shrink: 0;
+    max-width: 220px;
     text-decoration: none;
-    color: #e8d5a3;
+}
+
+.header .logo .logo-image {
+    display: block;
+    width: 48px !important;
+    height: 48px !important;
+    max-width: 48px !important;
+    max-height: 48px !important;
+    min-width: 0;
+    object-fit: contain;
     flex-shrink: 0;
 }
 
-.logo-image {
-    width: 58px;
-    height: 58px;
-    object-fit: contain;
-    display: block;
-    filter: drop-shadow(0 0 8px rgba(190, 145, 255, 0.25));
-    transition: transform 0.3s ease, filter 0.3s ease;
+.header .logo .logo-text {
+    font-size: 1rem;
+    letter-spacing: 1px;
+    white-space: nowrap;
 }
 
-.header .logo:hover .logo-image {
-    transform: scale(1.08);
-    filter: drop-shadow(0 0 12px rgba(220, 185, 120, 0.5));
-}
-
-.logo-text {
-    font-family: 'Cinzel', serif;
-    font-size: 1.15rem;
-    font-weight: 700;
-    letter-spacing: 2px;
-    color: #e8d5a3;
-}
-
-/* ==========================================
-   LOGO EN CELULARES
-========================================== */
+/* CELULARES */
 
 @media (max-width: 600px) {
 
     .header .logo {
-        gap: 8px;
+        gap: 6px;
+        max-width: 160px;
     }
 
-    .logo-image {
-        width: 44px;
-        height: 44px;
+    .header .logo .logo-image {
+        width: 34px !important;
+        height: 34px !important;
+        max-width: 34px !important;
+        max-height: 34px !important;
     }
 
-    .logo-text {
-        font-size: 0.9rem;
-        letter-spacing: 1.2px;
+    .header .logo .logo-text {
+        font-size: 0.75rem;
+        letter-spacing: 0.8px;
     }
 
 }
-
 
