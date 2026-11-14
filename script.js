@@ -7,6 +7,8 @@
 let cartas = [];
 let tiradaActual = null;
 
+const pasajeReading = document.getElementById("pasaje-reading");
+const startPasajeButton = document.getElementById("start-pasaje");
 // ==========================================
 // ELEMENTOS DEL HTML
 // ==========================================
@@ -76,9 +78,24 @@ const TIPOS_TIRADA = {
             "Lo que necesita atención",
             "Camino hacia la armonía"
         ]
+    },
+
+    pasaje: {
+        nombre: "La Tirada del Pasaje Seguro",
+        descripcion: "Siete cartas para explorar tu búsqueda, tu recorrido y tu destino.",
+        posiciones: [
+            "El viajero",
+            "¿Qué falta?",
+            "El camino pasado",
+            "El camino futuro",
+            "Obstáculos",
+            "Potencial golpe de suerte",
+            "El destino"
+        ]
     }
 
 };
+
 
 
 // ==========================================
@@ -1389,93 +1406,178 @@ function cerrarFichaCarta() {
 // BIBLIOTECA: MOSTRAR CARTAS POR CATEGORÍA
 // ==========================================
 
+
 function mostrarBiblioteca() {
 
     if (!tarotLibrary || !cartas.length) return;
 
-    const busqueda = buscadorCartas?.value
-        .toLowerCase()
-        .trim() || "";
+    const normalizar = texto =>
+        String(texto || "")
+            .toLowerCase()
+            .normalize("NFD")
+            .replace(/[\u0300-\u036f]/g, "")
+            .trim();
+
+    const busqueda = normalizar(buscadorCartas?.value || "");
 
     const categoriaActiva =
         tarotLibrary.dataset.categoriaActiva || "Arcanos Mayores";
 
-    const paloActivo = tarotLibrary.dataset.paloActivo || "Todos";
+    const palos = ["Copas", "Bastos", "Oros", "Espadas"];
+
     const esMenores = categoriaActiva === "Arcanos Menores";
 
-    // Actualizar las dos categorías principales.
+    let paloActivo = tarotLibrary.dataset.paloActivo || "Todos";
+
+    if (!palos.includes(paloActivo) && paloActivo !== "Todos") {
+        paloActivo = "Todos";
+        tarotLibrary.dataset.paloActivo = "Todos";
+    }
+
+    // Actualizar las pestañas principales.
     document.querySelectorAll(".category-tab").forEach(boton => {
+
         const activa =
             (boton.dataset.category === "mayores" && !esMenores) ||
             (boton.dataset.category === "menores" && esMenores);
 
         boton.classList.toggle("active", activa);
         boton.setAttribute("aria-selected", String(activa));
+
     });
 
-    const palos = ["Copas", "Bastos", "Oros", "Espadas"];
+    // Filtrar las cartas.
+    let cartasFiltradas = cartas.filter(carta => {
 
-    const cartasFiltradas = cartas.filter(carta => {
         const coincideCategoria = esMenores
             ? palos.includes(carta.categoria) &&
               (paloActivo === "Todos" || carta.categoria === paloActivo)
             : carta.categoria === "Arcanos Mayores";
 
-        const textoCarta = [
-            carta.nombre || "",
-            carta.simbolismo || "",
+        const textoCarta = normalizar([
+            carta.nombre,
+            carta.categoria,
+            carta.numero,
+            carta.derecho,
+            carta.invertido,
+            carta.simbolismo,
             ...(Array.isArray(carta.palabrasClave)
                 ? carta.palabrasClave
                 : [])
-        ].join(" ").toLowerCase();
+        ].join(" "));
 
         return coincideCategoria && textoCarta.includes(busqueda);
+
     });
 
+    // Ordenar los Arcanos Menores por palo.
+    if (esMenores) {
+
+        cartasFiltradas.sort((a, b) => {
+
+            return palos.indexOf(a.categoria) -
+                   palos.indexOf(b.categoria);
+
+        });
+
+    }
+
+    // Actualizar contador.
     const contador = document.getElementById("library-count");
+
     if (contador) {
         contador.textContent = `${cartasFiltradas.length} cartas`;
     }
 
+    // Filtros de los Arcanos Menores.
     const filtrosMenores = esMenores ? `
-        <div class="library-minor-tabs" role="group" aria-label="Filtrar arcanos menores">
-            <button type="button" class="library-minor-tab ${paloActivo === "Todos" ? "active" : ""}" data-suit="Todos">Todos</button>
-            <button type="button" class="library-minor-tab ${paloActivo === "Copas" ? "active" : ""}" data-suit="Copas">♡ Copas</button>
-            <button type="button" class="library-minor-tab ${paloActivo === "Bastos" ? "active" : ""}" data-suit="Bastos">✧ Bastos</button>
-            <button type="button" class="library-minor-tab ${paloActivo === "Oros" ? "active" : ""}" data-suit="Oros">◈ Oros</button>
-            <button type="button" class="library-minor-tab ${paloActivo === "Espadas" ? "active" : ""}" data-suit="Espadas">⚔ Espadas</button>
+
+        <div class="library-minor-tabs"
+             role="group"
+             aria-label="Filtrar arcanos menores">
+
+            <button type="button"
+                class="library-minor-tab ${paloActivo === "Todos" ? "active" : ""}"
+                data-suit="Todos">
+                Todos
+            </button>
+
+            <button type="button"
+                class="library-minor-tab ${paloActivo === "Copas" ? "active" : ""}"
+                data-suit="Copas">
+                ♡ Copas
+            </button>
+
+            <button type="button"
+                class="library-minor-tab ${paloActivo === "Bastos" ? "active" : ""}"
+                data-suit="Bastos">
+                ✧ Bastos
+            </button>
+
+            <button type="button"
+                class="library-minor-tab ${paloActivo === "Oros" ? "active" : ""}"
+                data-suit="Oros">
+                ◈ Oros
+            </button>
+
+            <button type="button"
+                class="library-minor-tab ${paloActivo === "Espadas" ? "active" : ""}"
+                data-suit="Espadas">
+                ⚔ Espadas
+            </button>
+
         </div>
+
     ` : "";
 
+    // Generar las tarjetas.
     const contenidoCartas = cartasFiltradas.length ? `
+
         <div class="library-category-grid">
+
             ${cartasFiltradas.map(carta => `
+
                 <button
                     type="button"
                     class="library-card-tab"
                     data-id="${carta.id}"
-                    aria-label="Ver ${carta.nombre}"
-                >
+                    aria-label="Ver ${carta.nombre}">
+
                     <img
                         src="${carta.imagen || ""}"
                         alt="${carta.nombre}"
-                        loading="lazy"
-                    >
+                        loading="lazy">
+
                     <span>${carta.nombre}</span>
+
                 </button>
+
             `).join("")}
+
         </div>
+
     ` : `
-        <p class="library-empty">No se encontraron cartas en esta categoría.</p>
+
+        <p class="library-empty">
+            No se encontraron cartas con esa búsqueda.
+        </p>
+
     `;
 
     tarotLibrary.innerHTML = `
+
         <section class="library-category-section">
+
             ${filtrosMenores}
+
             ${contenidoCartas}
+
         </section>
+
     `;
+
 }
+
 
 // ==========================================
 // EVENTOS DE LA BIBLIOTECA
@@ -1608,6 +1710,238 @@ document.addEventListener("keydown", event => {
     }
 
 });
+
+// ==========================================
+// TIRADA ESPECIAL: PASAJE SEGURO
+// ==========================================
+
+let pasajeActual = null;
+
+const POSICIONES_PASAJE = [
+    {
+        nombre: "El viajero",
+        descripcion: "El/la consultante"
+    },
+    {
+        nombre: "¿Qué falta?",
+        descripcion: "La razón de tu búsqueda"
+    },
+    {
+        nombre: "El camino pasado",
+        descripcion: "Las heridas sufridas y qué aprendiste"
+    },
+    {
+        nombre: "El camino futuro",
+        descripcion: "Un lugar para crecer y descubrir"
+    },
+    {
+        nombre: "Obstáculos",
+        descripcion: "Los desafíos que pueden aparecer"
+    },
+    {
+        nombre: "Potencial golpe de suerte",
+        descripcion: "Una oportunidad inesperada"
+    },
+    {
+        nombre: "El destino",
+        descripcion: "Hacia dónde conduce el viaje"
+    }
+];
+
+
+function realizarTiradaPasaje() {
+
+    if (!pasajeReading || cartas.length < 78) return;
+
+    // Seleccionar siete cartas diferentes.
+    const seleccionadas = mezclarMazo().slice(0, 7);
+
+    pasajeActual = seleccionadas.map((carta, indice) => ({
+        carta,
+        invertida: estaInvertida(),
+        posicion: POSICIONES_PASAJE[indice].nombre,
+        descripcion: POSICIONES_PASAJE[indice].descripcion,
+        revelada: false
+    }));
+
+    pasajeActual.tipo = "pasaje";
+    pasajeActual.nombre = "La Tirada del Pasaje Seguro";
+
+    // Crear las siete posiciones.
+    pasajeReading.innerHTML = `
+
+        <div class="pasaje-spread">
+
+            ${pasajeActual.map((item, indice) => `
+
+                <div class="pasaje-position">
+
+                    <h3>${indice + 1}. ${item.posicion}</h3>
+
+                    <p>${item.descripcion}</p>
+
+                    <button
+                        type="button"
+                        class="pasaje-card"
+                        data-index="${indice}"
+                        aria-label="Revelar ${item.posicion}"
+                    >
+                        <span class="pasaje-card-back">
+                            ✧
+                        </span>
+                    </button>
+
+                    <p class="reveal-hint">
+                        Hacé clic para revelar
+                    </p>
+
+                    <div class="pasaje-interpretation"></div>
+
+                </div>
+
+            `).join("")}
+
+        </div>
+
+        <p class="reading-progress pasaje-progress">
+            Revelá las siete cartas para descubrir tu lectura.
+        </p>
+
+        <div id="pasaje-result"></div>
+
+    `;
+
+    pasajeReading.classList.add("active");
+
+    pasajeReading.scrollIntoView({
+        behavior: "smooth",
+        block: "start"
+    });
+
+}
+
+
+// Iniciar la tirada.
+if (startPasajeButton) {
+
+    startPasajeButton.addEventListener(
+        "click",
+        realizarTiradaPasaje
+    );
+
+}
+
+
+// ==========================================
+// REVELAR LAS CARTAS DEL PASAJE SEGURO
+// ==========================================
+
+if (pasajeReading) {
+
+    pasajeReading.addEventListener("click", event => {
+
+        const boton = event.target.closest(".pasaje-card");
+
+        if (!boton || !pasajeActual) return;
+
+        const indice = Number(boton.dataset.index);
+        const item = pasajeActual[indice];
+
+        if (!item || item.revelada) return;
+
+        item.revelada = true;
+
+        const posicion = boton.closest(".pasaje-position");
+
+        // Mostrar la imagen de la carta.
+        const imagen = item.carta.imagen
+            ? `
+                <img
+                    src="${item.carta.imagen}"
+                    alt="${item.carta.nombre}"
+                    class="${item.invertida ? "pasaje-card-inverted" : ""}"
+                >
+            `
+            : `<span class="pasaje-card-back">✧</span>`;
+
+        boton.outerHTML = `
+            <div class="pasaje-card pasaje-card-revealed">
+                ${imagen}
+            </div>
+        `;
+
+        // Mostrar la interpretación de esta posición.
+        const significado = item.invertida
+            ? item.carta.invertido
+            : item.carta.derecho;
+
+        const orientacion = item.invertida
+            ? "Carta invertida"
+            : "Carta al derecho";
+
+        const interpretacion = posicion.querySelector(
+            ".pasaje-interpretation"
+        );
+
+        if (interpretacion) {
+
+            interpretacion.innerHTML = `
+
+                <h4>${item.carta.nombre}</h4>
+
+                <p><strong>${orientacion}</strong></p>
+
+                <p>
+                    ${significado || "No hay una interpretación disponible."}
+                </p>
+
+            `;
+
+        }
+
+        posicion.classList.add("revealed");
+
+        // Actualizar progreso.
+        const reveladas = pasajeActual.filter(
+            carta => carta.revelada
+        ).length;
+
+        const progreso = pasajeReading.querySelector(
+            ".pasaje-progress"
+        );
+
+        if (progreso) {
+
+            progreso.textContent = reveladas === 7
+                ? "Las siete cartas han sido reveladas."
+                : `Revelaste ${reveladas} de 7 cartas.`;
+
+        }
+
+        // Mostrar la interpretación completa al finalizar.
+        if (reveladas === 7) {
+
+            const resultado = pasajeReading.querySelector(
+                "#pasaje-result"
+            );
+
+            if (resultado) {
+
+                resultado.innerHTML = interpretarTirada(
+                    pasajeActual,
+                    "pasaje"
+                );
+
+            }
+
+            // Guardar en el historial.
+            guardarLectura(pasajeActual);
+
+        }
+
+    });
+
+}
 
 
 // ==========================================
