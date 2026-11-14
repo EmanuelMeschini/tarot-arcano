@@ -897,3 +897,392 @@ main { width: 100%; }
 
 }
 
+/* =====================================
+   TIRADA DEL PASAJE SEGURO
+===================================== */
+
+.pasaje-intro {
+    max-width: 650px;
+    margin: 0 auto 35px;
+    text-align: center;
+}
+
+.pasaje-intro p {
+    margin-bottom: 22px;
+    line-height: 1.7;
+}
+
+.pasaje-reading {
+    display: none;
+    max-width: 1000px;
+    margin: 40px auto;
+}
+
+.pasaje-reading.active {
+    display: block;
+}
+
+.pasaje-spread {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    grid-template-areas:
+        ". segunda ."
+        "sexta primera quinta"
+        "cuarta destino tercera";
+    gap: 24px;
+    align-items: center;
+    justify-items: center;
+    max-width: 850px;
+    margin: 0 auto;
+}
+
+.pasaje-position {
+    width: 100%;
+    max-width: 180px;
+    text-align: center;
+}
+
+.pasaje-position:nth-child(1) { grid-area: primera; }
+.pasaje-position:nth-child(2) { grid-area: segunda; }
+.pasaje-position:nth-child(3) { grid-area: tercera; }
+.pasaje-position:nth-child(4) { grid-area: cuarta; }
+.pasaje-position:nth-child(5) { grid-area: quinta; }
+.pasaje-position:nth-child(6) { grid-area: sexta; }
+.pasaje-position:nth-child(7) {
+    grid-area: destino;
+    max-width: 230px;
+}
+
+.pasaje-card {
+    position: relative;
+    width: 100%;
+    aspect-ratio: 2 / 3;
+    border: 2px solid #bd9147;
+    border-radius: 12px;
+    overflow: hidden;
+    background: linear-gradient(145deg, #302044, #171020);
+    box-shadow: 0 5px 18px rgba(0, 0, 0, 0.35);
+    cursor: pointer;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.pasaje-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 25px rgba(194, 151, 76, 0.3);
+}
+
+.pasaje-position:nth-child(7) .pasaje-card {
+    aspect-ratio: 3 / 2;
+}
+
+.pasaje-card img {
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.pasaje-card-back {
+    display: flex;
+    width: 100%;
+    height: 100%;
+    align-items: center;
+    justify-content: center;
+    color: #d7b66f;
+    font-size: 2.5rem;
+    background:
+        radial-gradient(circle, rgba(184, 139, 68, 0.2), transparent 65%),
+        linear-gradient(145deg, #302044, #171020);
+}
+
+.pasaje-position h3 {
+    margin: 12px 0 5px;
+    color: var(--gold, #c9a45c);
+    font-family: "Cormorant Garamond", serif;
+    font-size: 1.25rem;
+}
+
+.pasaje-position p {
+    color: var(--text-secondary, #d5c8b9);
+    font-size: 0.9rem;
+    line-height: 1.45;
+}
+
+.pasaje-interpretation {
+    display: none;
+    margin-top: 12px;
+    padding: 12px;
+    border: 1px solid rgba(201, 164, 92, 0.35);
+    border-radius: 10px;
+    background: rgba(30, 22, 39, 0.8);
+    text-align: left;
+}
+
+.pasaje-position.revealed .pasaje-interpretation {
+    display: block;
+}
+
+.pasaje-interpretation h4 {
+    margin-bottom: 7px;
+    color: var(--gold, #c9a45c);
+}
+
+.pasaje-interpretation p {
+    font-size: 0.95rem;
+}
+
+@media (max-width: 600px) {
+    .pasaje-spread {
+        gap: 12px 8px;
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+    }
+
+    .pasaje-position {
+        max-width: 100%;
+    }
+
+    .pasaje-position:nth-child(7) {
+        max-width: 100%;
+    }
+
+    .pasaje-position h3 {
+        font-size: 0.95rem;
+    }
+
+    .pasaje-position p {
+        font-size: 0.75rem;
+    }
+
+    .pasaje-card {
+        border-radius: 8px;
+    }
+
+    .pasaje-card-back {
+        font-size: 1.7rem;
+    }
+
+    .pasaje-interpretation {
+        padding: 8px;
+    }
+
+    .pasaje-interpretation p {
+        font-size: 0.8rem;
+    }
+}
+
+@media (max-width: 380px) {
+    .pasaje-spread {
+        gap: 10px 5px;
+    }
+
+    .pasaje-position h3 {
+        font-size: 0.82rem;
+    }
+
+    .pasaje-position p {
+        font-size: 0.68rem;
+    }
+}
+
+
+/* ==========================================
+   PASAJE SEGURO - SÉPTIMA CARTA
+   Grande, horizontal y centrada
+========================================== */
+
+.pasaje-position:nth-child(7) {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+    max-width: 360px;
+    margin: 0 auto;
+    gap: 14px;
+    z-index: 3;
+}
+
+/* Marco horizontal */
+.pasaje-position:nth-child(7) .pasaje-card {
+    width: 100%;
+    aspect-ratio: 3 / 2;
+    height: auto;
+    overflow: hidden;
+}
+
+/* Ilustración girada y ampliada */
+.pasaje-position:nth-child(7) .pasaje-card img {
+    display: block;
+    width: 150%;
+    height: 150%;
+    max-width: none;
+    object-fit: contain;
+    position: relative;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%) rotate(90deg);
+}
+
+/* Interpretación debajo */
+.pasaje-position:nth-child(7) .pasaje-interpretation {
+    display: none;
+    width: 100%;
+    margin: 0;
+    padding: 16px;
+    text-align: left;
+}
+
+.pasaje-position:nth-child(7).revealed .pasaje-interpretation {
+    display: block;
+}
+
+/* Celulares */
+@media (max-width: 600px) {
+    .pasaje-position:nth-child(7) {
+        max-width: 300px;
+    }
+}
+/* ==========================================
+   PASAJE SEGURO - BOTÓN INICIAR TIRADA
+========================================== */
+
+.pasaje-intro button {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 12px;
+    padding: 15px 38px;
+
+    background: linear-gradient(
+        135deg,
+        #c5a15e,
+        #98713b,
+        #c5a15e
+    );
+
+    color: #1c1425;
+    border: 1px solid #e5c989;
+    border-radius: 40px;
+
+    font-family: "Manrope", sans-serif;
+    font-size: 0.95rem;
+    font-weight: 700;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+
+    cursor: pointer;
+
+    box-shadow:
+        0 5px 18px rgba(197, 161, 94, 0.2),
+        inset 0 1px 2px rgba(255, 255, 255, 0.3);
+
+    transition: all 0.3s ease;
+}
+
+.pasaje-intro button:hover {
+    transform: translateY(-3px);
+    background: linear-gradient(
+        135deg,
+        #e0c17f,
+        #b58b4b,
+        #e0c17f
+    );
+
+    box-shadow: 0 8px 25px rgba(197, 161, 94, 0.35);
+}
+
+.pasaje-intro button:active {
+    transform: translateY(0) scale(0.97);
+}
+
+.pasaje-intro button:focus-visible {
+    outline: 2px solid #e5c989;
+    outline-offset: 5px;
+}
+
+/* Adaptación para celulares */
+@media (max-width: 600px) {
+    .pasaje-intro button {
+        padding: 13px 28px;
+        font-size: 0.85rem;
+        width: auto;
+        max-width: 100%;
+    }
+}
+/* ==========================================
+   PASAJE SEGURO - PRIMERAS SEIS CARTAS
+   Imágenes completas y mejor presentación
+========================================== */
+
+.pasaje-position:not(:nth-child(7)) {
+    width: 100%;
+    max-width: 180px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+}
+
+.pasaje-position:not(:nth-child(7)) .pasaje-card {
+    width: 100%;
+    aspect-ratio: 2 / 3;
+    height: auto;
+    overflow: hidden;
+    border: 2px solid #c5a15e;
+    border-radius: 12px;
+    background: #21172d;
+    box-shadow: 0 5px 20px rgba(0, 0, 0, 0.35);
+}
+
+.pasaje-position:not(:nth-child(7)) .pasaje-card img {
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    object-position: center;
+    transform: none;
+}
+
+.pasaje-position:not(:nth-child(7)) .pasaje-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 24px rgba(197, 161, 94, 0.25);
+}
+
+/* Cuadros de interpretación */
+.pasaje-position:not(:nth-child(7)) .pasaje-interpretation {
+    width: 100%;
+    margin-top: 8px;
+    padding: 14px;
+    border: 1px solid rgba(197, 161, 94, 0.4);
+    border-radius: 12px;
+    background: linear-gradient(
+        145deg,
+        rgba(48, 32, 62, 0.95),
+        rgba(27, 20, 37, 0.95)
+    );
+    box-shadow: 0 5px 18px rgba(0, 0, 0, 0.2);
+}
+
+/* Celulares */
+@media (max-width: 600px) {
+    .pasaje-position:not(:nth-child(7)) {
+        max-width: 100%;
+    }
+
+    .pasaje-position:not(:nth-child(7)) .pasaje-card {
+        border-radius: 9px;
+    }
+
+    .pasaje-position:not(:nth-child(7)) .pasaje-interpretation {
+        padding: 10px;
+    }
+}
+/* ==========================================
+   PASAJE SEGURO - CARTAS INVERTIDAS
+========================================== */
+
+/* Girar la carta cuando salga invertida */
+.pasaje-card.inverted img,
+.pasaje-card.invertida img,
+.pasaje-card.reversed img {
+    transform: rotate(180deg);
+}
